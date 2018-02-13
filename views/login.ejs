@@ -1,0 +1,30 @@
+<% include ./partials/header %>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <legend class="log-reg-intro">Login</legend>
+    </div>
+    <div class="form new_edit_cmp_forms">
+        <form action="/login" method="POST">
+            <div class="col-sm-6 col-sm-offset-4 col-md-4 col-md-offset-4">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" id="username" type="text" name="username" placeholder="username">
+                </div>
+            </div>
+            <div class="col-sm-6 col-sm-offset-4 col-md-4 col-md-offset-4">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" type="password" name="password" placeholder="password">
+                    <p class="message"><a href="/forgot">Forgot your password?</a></p>
+                </div>
+            </div>
+            <div class="col-xs-10 col-xs-offset-3 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4">
+                <button id="login-button" class="btn btn-lg btn-primary btn-block">Login!</button>
+                <p class="message">Don't have an account yet? Sign up here:  <a href="/register">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<% include ./partials/footer %>

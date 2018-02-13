@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="form new_edit_cmp_forms">
+            <form action="/reset/<%= token %>" method="POST">
+                <legend class="log-reg-intro">Reset Password</legend>
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" name="password" value="" placeholder="New password" autofocus="autofocus" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="confirm">New Password</label>
+                    <input type="password" name="confirm" value="" placeholder="Confirm password" autofocus="autofocus" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update Password" class="btn btn-primary btn-lg btn-block">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<% include ../partials/footer %>

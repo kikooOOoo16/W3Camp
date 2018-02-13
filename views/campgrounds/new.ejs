@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <legend class="log-reg-intro">Create a new Campground</legend>
+            <div class="form new_edit_cmp_forms">
+                <form action="/campgrounds" method="POST" enctype="multipart/form-data">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="campground[name]" placeholder="name">
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" id="image" name="image" accept="image/*" required >
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" class="form-control" type="text" name="campground[description]" rows="4" placeholder="Write a truthful description about your chosen campground..."></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="price">Price/Night</label>
+                            <input class="form-control" type="number" name="campground[price]" placeholder="price" min="0.01" step="0.01">
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input class="form-control" type="text" name="location" id="location" placeholder="High Tauern National Park, AUSTRIA">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-md-offset-3">
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                        </div>
+                        <a href="/campgrounds">Go Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

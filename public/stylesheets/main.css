@@ -1,0 +1,262 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+
+    /*________HEADER STYLES________*/
+.nav-btn {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+.nav-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    background: #555555;
+    height: 4px;
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.nav-btn:hover:before, .nav-btn:focus:before, .nav-btn:active:before {
+    left: 0;
+    right: 0;
+}
+.nav-btn:hover, .nav-btn:focus, nav-btn:active {
+    -webkit-animation-name: nav-btn;
+    animation-name: nav-btn;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    background-color: #E7E7E7;
+    background-color: #e7e7e7;
+}
+.navbar-default .navbar-nav>.active>.div-bottom-border {
+    position: absolute;
+    z-index: 2;
+    margin-top: -4px;
+    width: 100%;
+    height: 4px;
+    background-color: #555555;
+}   
+/*User profile image and name*/
+.inset {
+    float: left;
+    margin-top: -5px;
+    margin-right: 5px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.6), 
+        0 1px 1px rgba(0,0,0,0.1);
+    background-color: transparent !important;
+    z-index: 999;
+}
+.inset img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+    display: block;
+    position: relative;
+    z-index: 998;
+}
+#nav-login{
+    width: 65px;
+}
+
+    /*__________FOOTER STYLES________*/
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+
+    /*________CAMPGROUNDS INDEX.EJS STYLES________*/
+.btn-hover-shadow {
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;    
+}    
+.btn-hover-shadow:hover, .btn-hover-shadow:focus, .btn-hover-shadow:active {
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+    /*________CAMPGROUNDS SHOW.EJS STYLES________*/
+.thumbnail img{
+    width: 100%;
+}
+.thumbnail {
+    padding: 0;
+}
+.thumbnail .caption-full {
+    padding: 9px;
+}
+.delete-form {
+    display: inline;
+}
+.comment-new-form {
+    border-left: 5px solid #00C851;
+    margin-top: 15px;
+}
+.button-form-spacing {
+    margin-top: 15px;
+}
+.no-comments-text {
+    color: grey;
+}
+.comment-isCurrentUserGlyph{
+    color: orange;
+}
+.edit-comment-form {
+    border-left: 5px solid #ffbb33; 
+    margin-top: 15px;
+}
+.delete-comment-form {
+    display: inline;
+}
+
+/*Google maps API*/
+#map {
+    height: 400px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+/*________CAMPGROUNDS NEW.EJS/EDIT.EJS STYLES________*/
+.new_edit_cmp_forms {
+    width: 75%; 
+    margin: 10px auto;
+}
+
+    /*________LOGIN FORM________*/
+#login-button {
+    margin-left: 25px;
+}    
+    
+    /*________SIGN UP FORM________*/
+.log-reg-intro {
+    font-family: 'Nunito';
+    font-size: 34px;
+    margin: 20px auto;
+    text-align: center;
+    width: 45%;
+}
+.form .form-control {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 5px;
+    /*padding: 12px;*/
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form button {
+    display: inline-block;        
+    vertical-align: middle;    
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    outline: 0;
+    border: none;
+    padding: 10px;
+    width: 42%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 19px;
+}
+.form label {
+    font-family: 'Nunito';
+    font-size: 14px;
+}
+.form .message {
+    margin-top: 10px;
+    margin-left: 6px;
+    color: #b3b3b3;
+    font-size: 15px;
+}
+
+    /*________USERS PROFILE________*/
+.user-camps-list {
+     width: 48%;
+     background-color: #F8F8F8;
+}
+#editProfileBtn {
+    border: none;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+#editProfileBtn a {
+    color: white;
+}
+
+    /*________EDIT USERS PROFILE________*/
+#userImage-upload {
+    margin-top: 4px;
+}
+
+    /*________CONTACT US________*/
+
+#contact-btn {
+    width: 80%;
+    display: block;
+}
+
+/* Flexbox grid fix */
+.flex-wrap {
+    display:flex;
+    flex-wrap: wrap;
+}
+
