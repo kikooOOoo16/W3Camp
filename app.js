@@ -23,7 +23,7 @@ var commentRoutes     = require("./routes/comments"),
 
 mongoose.Promise = global.Promise;
 // mongoose.connect("mongodb://localhost/yelp_camp_v15", {useMongoClient: true});
-mongoose.connect("mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp");
+mongoose.connect("mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp", {useMongoClient: true});
 // mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
