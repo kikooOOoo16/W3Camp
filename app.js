@@ -22,9 +22,9 @@ var commentRoutes     = require("./routes/comments"),
     contactRoutes     = require("./routes/contact");
 
 mongoose.Promise = global.Promise;
-// mongoose.connect("mongodb://localhost/yelp_camp_v15", {useMongoClient: true});
-mongoose.connect("mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp", {useMongoClient: true});
-// mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp
+mongoose.connect(process.env.DATABASE_URL, {useMongoClient: true});
+console.log(process.env.DATABASE_URL);
+// mongoose.connect("mongodb://kikooOOoo:076672844@ds237848.mlab.com:37848/w3camp", {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
