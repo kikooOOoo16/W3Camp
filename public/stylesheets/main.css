@@ -4,6 +4,22 @@ html {
 }
 
 
+    /*________ANIMATION STYLES________*/
+.hvr-grow {
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
     /*________HEADER STYLES________*/
 .navbar-default {
     background-color: #A1A1A1;
@@ -109,6 +125,7 @@ html {
 /*    width: 65px;*/
 /*    text-align: center;*/
 /*}*/
+
 
     /*__________FOOTER STYLES________*/
 body {
