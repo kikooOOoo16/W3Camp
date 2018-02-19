@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>YelpCamp</title>
+        <title>W3Camp</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="/stylesheets/main.css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
+            <link href="https://fonts.googleapis.com/css?family=Nunito|Noto+Sans|Roboto" rel="stylesheet"> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
     </head>
     <body>
@@ -33,10 +33,10 @@
                             <li id="nav-login" class="nav-btn <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a><div class="div-bottom-border"></div></li>
                             <li class="nav-btn <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a><div class="div-bottom-border"></div></li>
                         <% } else if (currentUser.isAdmin){ %>
-                            <li class="nav-btn <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>"><a href="/users/<%= currentUser._id %>"><div class="inset"><img src="<%= currentUser.avatarImg.url %>" class="img-circle"></div>Signed In as the admin <%= currentUser.username %></a><div class="div-bottom-border"></div></li>
+                            <li class="nav-btn <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>"><a href="/users/<%= currentUser._id %>"><div class="inset"><img src="<%= currentUser.avatarImg.url %>" class="img-circle"></div>Admin: <%= currentUser.username %></a><div class="div-bottom-border"></div></li>
                             <li class="nav-btn"><a href="/logout">Logout</a><div class="div-bottom-border"></div></li>
                         <% } else {%>
-                            <li class="nav-btn <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>"><a href="/users/<%= currentUser._id %>"><div class="inset"><img src="<%= currentUser.avatarImg.url %>" class="img-circle"></div>Signed In As <%= currentUser.username %></a><div class="div-bottom-border"></div></li>
+                            <li class="nav-btn <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>"><a href="/users/<%= currentUser._id %>"><div class="inset"><img src="<%= currentUser.avatarImg.url %>" class="img-circle"></div><%= currentUser.username %></a><div class="div-bottom-border"></div></li>
                             <li class="nav-btn"><a href="/logout">Logout</a><div class="div-bottom-border"></div></li>
                         <% } %>
                     </ul>

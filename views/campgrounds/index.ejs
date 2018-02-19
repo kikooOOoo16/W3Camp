@@ -2,7 +2,7 @@
 
 <div class="container">
 
-    <header class="jumbotron">
+    <header class="jumbotron main">
         <div class="container">
             <h1><span class="glyphicon glyphicon-tent"></span>Welcome To W3Camp</h1>
             <p>View our hand-picked campgrounds from all over the world</p>
@@ -19,16 +19,17 @@
         </div>
     </header>
     
-    <div class="row text-center flex-wrap" id="campground-grid">
+    <div class="row flex text-center" id="campground-grid">
         <% campgrounds.forEach(function(campground){ %>
-            <div class = "col-md-3 col-sm-6">
+            <div class = "col-md-3 col-sm-6 col-xs-12">
                 <div class="thumbnail">
-                    <img src="<%= campground.image.url%>">
+                    <img class="img-resize img-responsive" src="<%= campground.image.url%>">
                     <div class="caption">
                         <h4><%=campground.name %></h4>
+                        <p class="small">Prices starting at $<%=campground.price%></p>
                     </div>
                     <p>
-                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More info</a>
+                        <a class="btn btn-primary camp-info-btn" href="/campgrounds/<%= campground._id %>">More info</a>
                     </p>
                 </div>
             </div>

@@ -24,14 +24,15 @@ $('#campground-search').on('input', function(){
             $("#campground-grid").html("");
             resultData.campgrounds.forEach(function(campground){
                 $("#campground-grid").append(`
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="thumbnail">
-                            <img src="${campground.image.url}">
+                            <img class="img-resize img-responsive" src="${campground.image.url}">
                             <div class="caption">
                                 <h4> ${campground.name} </h4>
+                                <p class="small">Prices starting at ${campground.price}</p>
                             </div>
                             <p>
-                                <a href="/campgrounds/${campground._id}" class="btn btn-primary">More Info </a>
+                                <a class="btn btn-primary" href="/campgrounds/${campground._id}">More Info </a>
                             </p>
                         </div>
                     </div>

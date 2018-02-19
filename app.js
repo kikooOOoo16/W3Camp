@@ -61,5 +61,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/contact", contactRoutes);
 
 app.listen(process.env.PORT, process.env.ID, function() {
-    console.log("The YelpCamp server has started");
+    console.log("The W3Camp server has started.");
 });
