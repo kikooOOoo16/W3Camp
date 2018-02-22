@@ -4,23 +4,25 @@
     <div class="row">
         <div class="col-md-4">
             <h1><%= user.firstName + " " + user.lastName %></h1>
-            <div class="thumbnail">
-                <img src="<%= user.avatarImg.url %>" alt="/images/defaultAvatar.png">
-                <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+            <div class="card bg-light mb-3">
+                    <img class="card-image-top" src="<%= user.avatarImg.url %>" alt="/images/defaultAvatar.png">
+                <div class="card-body">
+                    <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+                    <p class="card-text">
+                        <%= user.bio %>
+                    </p>
+                </div>
             </div>
-            <p>
-                <%= user.bio %>
-            </p>
             <% if (currentUser && user.id === currentUser.id) { %>
                 <a href="<%= user.id %>/edit" id="editProfileBtn"class="btn btn-primary btn-lg btn-block hvr-grow">Edit Profile</a>
             <% } %>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 mt-3">
             <% if(campgrounds.length > 0) { %>
                 <% if (currentUser && user.id === currentUser.id) { %>
-                    <h3>View your submitted campgrounds: </h3>        
+                    <h4 class="mb-3">View your submitted campgrounds: </h4>        
                 <% } else { %>
-                    <h3><%= user.username %>'s submitted campgrounds: </h3>
+                    <h4 class="mb-3"><%= user.username %>'s submitted campgrounds: </h4>
                 <% } %>
                 <ul class="list-group">
                     <% campgrounds.forEach(function(campground) { %>
@@ -29,9 +31,9 @@
                 </ul>
             <% } else { %>
                 <% if (currentUser && user.id === currentUser.id) { %>
-                    <h3>You haven't submitted any campgrounds... :( </h3>        
+                    <h4>You haven't submitted any campgrounds... :( </h4>        
                 <% } else { %>
-                    <h3><%= user.username %> hasn't submitted any campgrounds :( </h3>
+                    <h4><%= user.username %> hasn't submitted any campgrounds :( </h4>
                 <% } %>
             <% } %>
         </div>

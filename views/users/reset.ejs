@@ -1,10 +1,12 @@
 <% include ../partials/header %>
 
 <div class="container">
-    <div class="row">
-        <div class="form new_edit_cmp_forms">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <legend class="form-header">Reset Password</legend>
+        </div>
+        <div class="form input-form col-7 col-md-4 col-lg-3">
             <form action="/reset/<%= token %>" method="POST">
-                <legend class="log-reg-intro">Reset Password</legend>
                 <div class="form-group">
                     <label for="password">New Password</label>
                     <input type="password" name="password" value="" placeholder="New password" autofocus="autofocus" class="form-control"/>
@@ -20,9 +22,5 @@
         </div>
     </div>
 </div>
-
-
-
-
 
 <% include ../partials/footer %>

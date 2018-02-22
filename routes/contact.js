@@ -27,7 +27,6 @@ router.post("/send", function(req, res) {
             req.flash("error", "Captcha Failed");
             return res.redirect("/contact");
         }
-        
     var smtpTransport = nodemailer.createTransport({
             service: 'Gmail', 
             auth: {

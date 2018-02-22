@@ -217,7 +217,7 @@ router.post("/forgot", function (req, res, next) {
         function(token, done) {
             User.findOne({email: req.body.email}, function(err, foundUser){
                if (!foundUser || err) {
-                   req.flash("error", "No account with that email addres exist.");
+                   req.flash("error", "No account with that email address exists.");
                    return res.redirect("/forgot");
                }
                foundUser.resetPasswordToken = token;

@@ -1,12 +1,15 @@
 <% include ../partials/header %>
+
 <div class="container">
-    <div class="row">
-        <div class="form new_edit_cmp_forms">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <legend class="form-header">Forgot Password</legend>
+        </div>
+        <div class="form input-form col-7 col-md-4 col-lg-3">
             <form action="/forgot" method="POST">
-                <legend class="log-reg-intro">Forgot Password</legend>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" autofocus class="form-control">
+                    <input type="email" name="email" placeholder="email" autofocus class="form-control">
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Reset Password">

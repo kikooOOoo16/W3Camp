@@ -21,91 +21,91 @@ html {
 
 
     /*________HEADER STYLES________*/
-.navbar-default {
-    background-color: #A1A1A1;
-}
-.navbar-default .navbar-brand{
-    color: #555555;
+/*.bg-dark {*/
+    /*background-color: #A1A1A1!important;*/
+/*}*/
+.navbar .navbar-brand{
+    /*color: #555555;*/
     /*font-family: 'Roboto', sans-serif;*/
     font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
     font-size: 25px;
 }
-.navbar-default .navbar-brand:hover{
-    color: #ffffff;
+.navbar .navbar-brand:hover{
+    color: #8B9D98;
 }
-.navbar-default .navbar-nav>li>a{
-    color: #ffffff;
-    font-size: 14px;
+.navbar-dark .navbar-nav .nav-link{
+    /*color: #ffffff;*/
+    font-size: 16px;
     font-family: 'Noto Sans', sans-serif;
-    text-align: center;
+    /*text-align: center;*/
     /*font-family: 'Roboto', sans-serif;*/
 }
-.nav-btn {
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px transparent;
-    overflow: hidden;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
-}
-.nav-btn:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    right: 50%;
-    bottom: 0;
-    background: #555555;
-    height: 4px;
-    -webkit-transition-property: left, right;
-    transition-property: left, right;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-}
-.nav-btn:hover:before, .nav-btn:focus:before, .nav-btn:active:before {
-    left: 0;
-    right: 0;
-}
-.nav-btn:hover, .nav-btn:focus, nav-btn:active {
-    -webkit-animation-name: nav-btn;
-    animation-name: nav-btn;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-delay: 0.5s;
-    animation-delay: 0.5s;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    background-color: #E7E7E7;
-    background-color: #e7e7e7;
-}
-.navbar-default .navbar-nav>.active>.div-bottom-border {
-    position: absolute;
-    z-index: 2;
-    margin-top: -4px;
-    width: 100%;
-    height: 4px;
-    background-color: #555555;
-}   
-.navbar-default .navbar-nav>.div-bottom-border{
-    background-color: #A1A1A1;
-}
+/*.nav-item {*/
+/*    display: inline-block;*/
+/*    vertical-align: middle;*/
+/*    position: relative;*/
+/*    -webkit-transform: perspective(1px) translateZ(0);*/
+/*    transform: perspective(1px) translateZ(0);*/
+/*    box-shadow: 0 0 1px transparent;*/
+/*    overflow: hidden;*/
+/*    -webkit-transition-duration: 0.3s;*/
+/*    transition-duration: 0.3s;*/
+/*    -webkit-transition-property: color, background-color;*/
+/*    transition-property: color, background-color;*/
+/*}*/
+/*.nav-item:before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    z-index: -1;*/
+/*    left: 50%;*/
+/*    right: 50%;*/
+/*    bottom: 0;*/
+/*    background: #ffffff;*/
+/*    height: 4px;*/
+/*    -webkit-transition-property: left, right;*/
+/*    transition-property: left, right;*/
+/*    -webkit-transition-duration: 0.3s;*/
+/*    transition-duration: 0.3s;*/
+/*    -webkit-transition-timing-function: ease-out;*/
+/*    transition-timing-function: ease-out;*/
+/*}*/
+/*.nav-item:hover:before, .nav-item:focus:before, .nav-item:active:before {*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*}*/
+/*.nav-item:hover, .nav-item:focus, nav-item:active {*/
+/*    -webkit-animation-name: nav-btn;*/
+/*    animation-name: nav-btn;*/
+/*    -webkit-animation-duration: 1s;*/
+/*    animation-duration: 1s;*/
+/*    -webkit-animation-delay: 0.5s;*/
+/*    animation-delay: 0.5s;*/
+/*    -webkit-animation-timing-function: linear;*/
+/*    animation-timing-function: linear;*/
+/*    -webkit-animation-iteration-count: infinite;*/
+/*    animation-iteration-count: infinite;*/
+/*    background-color: #E7E7E7;*/
+/*    background-color: #e7e7e7;*/
+/*}*/
+/*.navbar .navbar-nav>.active>.div-bottom-border {*/
+/*    position: absolute;*/
+/*    z-index: 2;*/
+/*    margin-top: -4px;*/
+/*    width: 100%;*/
+/*    height: 4px;*/
+/*    background-color: #ffffff;*/
+/*}   */
+/*.navbar .navbar-nav>.div-bottom-border{*/
+/*    background-color: #A1A1A1;*/
+/*}*/
 /*User profile image and name*/
 .inset {
     float: left;
     margin-top: -5px;
-    margin-right: 5px;
-    width: 33px;
-    height: 33px;
+    margin-right: 7px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     box-shadow:
         inset 0 0 0 2px rgba(255,255,255,0.6), 
@@ -121,10 +121,13 @@ html {
     position: relative;
     z-index: 998;
 }
-/*#nav-login{*/
-/*    width: 65px;*/
-/*    text-align: center;*/
-/*}*/
+.dropdown-menu {
+    left: auto;
+    background-color: #343A40;
+}
+.dropdown-item {
+    color: #ffffff;
+}
 
 
     /*__________FOOTER STYLES________*/
@@ -136,12 +139,17 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #E7E7E7;
 }
 .container .text-muted {
   margin: 20px 0;
+}
+
+
+/*__________ALERT MESSAGES STYLES________*/
+.alert {
+    margin-top: 20px;
 }
 
 
@@ -152,7 +160,6 @@ body {
     background-position: 0% 25%;
     background-size: cover;
     background-repeat: no-repeat;
-    /*background-color: #007849;*/
     color: #E4E4E4;
     -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0), 
         3px 5px 3px rgba(0, 0, 0, 0.1),
@@ -191,15 +198,16 @@ body {
 
 
     /*________CAMPGROUNDS SHOW.EJS STYLES________*/
-.thumbnail img{
-    width: 100%;
+.list-group-flush .list-group-item>a{
+    background-color: #B8BDC0;
+    color: #4F4F54;
+}
+.list-group-flush .list-group-item{
+    background-color: #B8BDC0;
+}
+.card img{
     border-radius: 3px;
-}
-.thumbnail {
-    padding: 0;
-}
-.thumbnail .caption-full {
-    padding: 9px;
+    width: 100%;
 }
 .delete-form {
     display: inline;
@@ -214,7 +222,7 @@ body {
 .no-comments-text {
     color: grey;
 }
-.comment-isCurrentUserGlyph{
+.comment-isCurrentUserIcon{
     color: orange;
 }
 .edit-comment-form {
@@ -224,7 +232,9 @@ body {
 .delete-comment-form {
     display: inline;
 }
-
+#comments-card{
+    margin-left: 6px;
+}
 /*Google maps API*/
 #map {
     height: 400px;
@@ -233,66 +243,37 @@ body {
 }
 
 
-/*________CAMPGROUNDS NEW.EJS/EDIT.EJS STYLES________*/
-.new_edit_cmp_forms {
-    width: 75%; 
-    margin: 10px auto;
-}
-
-    /*________LOGIN FORM________*/
-#login-button {
-    margin-left: 25px;
-}    
-    
-    /*________SIGN UP FORM________*/
-.log-reg-intro {
+    /*________FORMS STYLING________*/
+.form-header {
     font-family: 'Nunito';
     font-size: 34px;
-    margin: 20px auto;
+    margin: 15px auto;
     text-align: center;
-    width: 45%;
+    width: 25%;
+    border-bottom: 1px solid #e5e5e5;
 }
 .form .form-control {
-    outline: 0;
     background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 5px;
-    /*padding: 12px;*/
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-.form button {
-    display: inline-block;        
-    vertical-align: middle;    
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    outline: 0;
-    border: none;
-    padding: 10px;
-    width: 42%;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    font-size: 19px;
-}
-.form label {
-    font-family: 'Nunito';
-    font-size: 14px;
+    /*outline: none;*/
+    /*border: none;*/
 }
 .form .message {
     margin-top: 10px;
-    margin-left: 6px;
-    color: #b3b3b3;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 15px;
 }
+.form label {
+    font-family: 'Nunito';
+}
+.form button {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: 50%;
+    font-size: 22px;
+}
+
 
     /*________USERS PROFILE________*/
 .user-camps-list {
@@ -310,21 +291,15 @@ body {
     color: white;
 }
 
+
     /*________EDIT USERS PROFILE________*/
 #userImage-upload {
     margin-top: 4px;
 }
 
-    /*________CONTACT US________*/
 
+    /*________CONTACT US________*/
 #contact-btn {
     width: 80%;
     display: block;
 }
-
-/* Flexbox grid fix */
-.flex-wrap {
-    display:flex;
-    flex-wrap: wrap;
-}
-
