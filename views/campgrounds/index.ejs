@@ -12,20 +12,20 @@
             <p>
                 <form action="/campgrounds" method="GET" class="form-inline" id="campground-search">
                     <div class="form-group">
-                        <input type="text" name="search" placeholder="Campground search..." class="form-control">    
+                        <input type="text" id="campground-search" name="search" placeholder="Campground search..." class="form-control">    
                     </div>
                 </form>
             </p>
         </div>
     </header>
     
-    <div class="row d-flex text-center" id="campground-grid">
+    <div class="row justify-content-center justify-content-lg-start d-flex text-center" id="campground-grid">
         <% campgrounds.forEach(function(campground){ %>
-            <div class = "col-lg-3 col-md-4 col-sm-6">
+            <div class = "col-8 col-md-4 col-lg-3">
                 <div class="card bg-light mb-4">
                     <img class="card-image-top img-resize img-responsive" src="<%= campground.image.url%>">
                     <div class="card-title mt-2">
-                        <h4><%=campground.name %></h4>
+                        <h5><%=campground.name %></h5>
                         <p class="card-text">Prices starting at $<%=campground.price%></p>
                     </div>
                     <p>

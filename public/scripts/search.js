@@ -1,7 +1,7 @@
 $('#campground-search').on('input', function(){
     var search = $(this).serialize();
     if (search === "search="){
-        search = "search=zyz12"
+        search = "search=zyz12";
         console.log(search);
         $.get("/campgrounds?" + search, function(resultData){
             displayCampgrounds(resultData);
@@ -17,22 +17,22 @@ $('#campground-search').on('input', function(){
             $("#campground-grid").html("");
             $("#campground-grid").append(`
                 <div class="container">
-                    <h4> No campgrounds match that query. </h4>
+                    <h4 class="mb-2 mt-2"> No campgrounds match that query. </h4>
                 </div>
             `);
         } else {
             $("#campground-grid").html("");
             resultData.campgrounds.forEach(function(campground){
                 $("#campground-grid").append(`
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="thumbnail">
-                            <img class="img-resize img-responsive" src="${campground.image.url}">
-                            <div class="caption">
-                                <h4> ${campground.name} </h4>
-                                <p class="small">Prices starting at ${campground.price}</p>
+                    <div class="col-8 col-md-4 col-lg-3">
+                        <div class="card bg-light mb-4">
+                            <img class="card-image-top img-resize img-responsive" src="${campground.image.url}">
+                            <div class="card-title mt-2">
+                                <h5> ${campground.name} </h5>
+                                <p class="card-text">Prices starting at ${campground.price}</p>
                             </div>
                             <p>
-                                <a class="btn btn-primary" href="/campgrounds/${campground._id}">More Info </a>
+                                <a class="btn card-link btn-primary hvr-grow" href="/campgrounds/${campground._id}">More Info </a>
                             </p>
                         </div>
                     </div>
