@@ -168,6 +168,17 @@ body {
         3px 5px 3px rgba(0, 0, 0, 0.1),
         6px 8px 6px rgba(0, 0, 0, 0.3);
 }
+.fa-free-code-camp{
+    font-size: 1.3em;
+}
+#campground-search{
+    width: 210px;
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11pt;
+    text-decoration: inherit;
+}
 .btn-hover-shadow {
     border: none;
     display: inline-block;
