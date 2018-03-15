@@ -9,8 +9,7 @@ var express     = require("express"),
     Campground  = require("./models/campground"),
     Comment     = require("./models/comment"),
     User        = require("./models/user"),
-    seedDB      = require("./seeds"),
-    geocoder    = require("geocoder");
+    seedDB      = require("./seeds");
     
 //  dotenv setup
     require('dotenv').config();
