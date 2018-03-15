@@ -55,7 +55,7 @@ var middlewareObj = {
     
     checkProfileOwnership: function (req, res, next) {
         if (req.isAuthenticated()) {
-            if(req.user._id.equals(req.params.id)) {
+            if(req.user._id.equals(req.params.id) || req.user.isAdmin) {
                 next();
             } else {
                 req.flash("error", "Access denied, this is not your profile.");

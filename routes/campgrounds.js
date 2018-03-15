@@ -41,37 +41,37 @@ cloudinary.config({
 router.get("/", function(req, res) {
     var resultData = {},
         queryResult;
-    if(req.query.search && req.xhr && req.query.search !== "zyz12") {
-        const regex = RegExp(escapeRegx(req.query.search), 'gi');
+    if(req.query.search && req.xhr && req.query.search !== "all!!") {
+        const regex = RegExp(escapeRegex(req.query.search), 'gi');
         Campground.find({name: regex}, function(err, allCampgrounds) {
             if (err) {
                 req.flash("error", err.message);
-                console.log(err);
+                console.log("Search error: " + err);
+                return res.redirect("/campgrounds");
+            } 
+            if (allCampgrounds.length < 1) { 
+                queryResult = false;
             } else {
-                    if (allCampgrounds.length < 1) { 
-                        queryResult = false;
-                    } else {
-                        queryResult = true;
-                    }
-                resultData = {
-                    campgrounds: allCampgrounds,
-                    result: queryResult
-                }   
-                res.status(200).json(resultData);    
+                queryResult = true;
             }
+            resultData = {
+                campgrounds: allCampgrounds,
+                result: queryResult
+            }   
+            res.status(200).json(resultData);    
         });
-    } else if (req.query.search && req.xhr && req.query.search === "zyz12"){
-            Campground.find({}, function(err, allCampgrounds) {
-            if (err) {
-                req.flash("error", err.message);
-                console.log(err);
-            } else {
-                        resultData = {
-                        campgrounds: allCampgrounds,
-                        result: true
-                    }
-                res.status(200).json(resultData); 
-            }
+    } else if (req.query.search && req.xhr && req.query.search === "all!!") {
+        Campground.find({}, function(err, allCampgrounds) {
+        if (err) {
+            req.flash("error", err.message);
+            console.log("Search error: " + err);
+            return res.redirect("/campgrounds");
+        } 
+        resultData = {
+            campgrounds: allCampgrounds,
+            result: true
+        }
+        res.status(200).json(resultData); 
         });
     } else {
         Campground.find({}, function(err, allCampgrounds) {
@@ -244,7 +244,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
     });
 });
 
-function escapeRegx(text){
+function escapeRegex(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 

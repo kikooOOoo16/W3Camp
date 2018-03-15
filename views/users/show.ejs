@@ -2,40 +2,200 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 mt-3 mr-4">
             <h1><%= user.firstName + " " + user.lastName %></h1>
             <div class="card bg-light mb-3">
                     <img class="card-image-top" src="<%= user.avatarImg.url %>" alt="/images/defaultAvatar.png">
-                <div class="card-body">
-                    <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
-                    <p class="card-text">
-                        <%= user.bio %>
-                    </p>
-                </div>
             </div>
             <% if (currentUser && user.id === currentUser.id) { %>
-                <a href="<%= user.id %>/edit" id="editProfileBtn"class="btn btn-primary btn-lg btn-block hvr-grow">Edit Profile</a>
+                <!--<a href="<%= user.id %>/edit" id="editProfileBtn"class="btn btn-primary btn-lg btn-block hvr-grow">Edit Profile</a>-->
             <% } %>
         </div>
-        <div class="col-md-8 mt-3 mb-3">
-            <% if(campgrounds.length > 0) { %>
-                <% if (currentUser && user.id === currentUser.id) { %>
-                    <h4 class="mb-3">View your submitted campgrounds: </h4>        
-                <% } else { %>
-                    <h4 class="mb-3"><%= user.username %>'s submitted campgrounds: </h4>
+        
+        <div class="col-md-7 mt-3 mb-3 bg-light border">
+            <ul class="nav nav-tabs mt-2">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#campgrounds" data-toggle="tab" class="nav-link">
+                        <% if (currentUser && user.id === currentUser.id) { %>
+                            My Campgrounds        
+                        <% } else { %>
+                            Submitted Campgrounds 
+                        <% } %>
+                    </a>
+                </li>
+                <% if (currentUser && user.id === currentUser.id || currentUser.isAdmin) { %>
+                <li class="nav-item">
+                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                </li>
                 <% } %>
-                <ul class="list-group">
-                    <% campgrounds.forEach(function(campground) { %>
-                        <li class="list-group-item user-camps-list"><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></li>
-                    <% }); %>
-                </ul>
-            <% } else { %>
-                <% if (currentUser && user.id === currentUser.id) { %>
-                    <h4>You haven't submitted any campgrounds... :( </h4>        
-                <% } else { %>
-                    <h4><%= user.username %> hasn't submitted any campgrounds :( </h4>
-                <% } %>
-            <% } %>
+            </ul>
+            
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <h5 class="mb-3"><%= user.username %>'s Profile</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-justify">
+                                <%= user.bio %>
+                            </p>
+                            <h6 class="float-left mr-2">Contact :</h6>
+                            <p>
+                                <a href="mailto:<%= user.email %>"><%= user.email %></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="campgrounds">
+                    <% if(campgrounds.length > 0) { %>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Submitted:</th>
+                            </tr>
+                        </thead>
+                        <tbody>                                    
+                           <% campgrounds.forEach(function(campground) { %>
+                                <tr>
+                                    <td>
+                                       <a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
+                                    </td>
+                                    <td><%= moment(campground.createdAt).fromNow() %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody> 
+                    </table>
+                    <% } else {%>
+                        <h4><%= user.username %> hasn't submitted any campgrounds :( </h4>
+                    <% } %>
+                </div>
+                
+                <div class="tab-pane" id="edit">
+                    <form action="/users/<%= user.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input class="form-control" pattern=".{3,15}" id="firstName" required title="Must be between 3 and 15 Characters" type="text" name="user[firstName]" placeholder="first name*" value="<%= user.firstName %>">
+                                </div>    
+                            </div>
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input class="form-control" pattern=".{3,15}" id="lastName" required title="Must be between 3 and 15 Characters" type="text" name="user[lastName]" placeholder="last name*" value="<%= user.lastName %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input class="form-control" type="email" id="email" required name="user[email]" placeholder="example@mail.com*" value="<%= user.email %>">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="adminPass">Admin Password</label>
+                                    <input class="form-control" type="password" id="adminPass" name="adminPass" placeholder="admin password" value="<%= user.isAdmin ? "admin123" : "" %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input class="form-control" pattern=".{3,15}" id="username" required title="Must be between 3 and 15 Characters" type="text" name="user[username]" placeholder="username*" value="<%= user.username %>">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-8">
+                                <div class="form-group">
+                                    <label for="image">Image</label>
+                                    <input id="userImage-upload" type="file" id="image" name="image" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-8">
+                                <div class="form-group">
+                                    <label for="bio">Bio</label>
+                                    <textarea id="bio" required class="form-control" type="bio" name="user[bio]" rows="4" placeholder="Write a short description of yourself and what you enjoy about camping."><%= user.bio %></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label form-control-label"></label>
+                            <div class="col-lg-7">
+                                <button class="w-50 btn btn-primary hvr-grow">Update!</button>
+                            </div>
+                        </div>
+                        <input style="position: absolute; display: none; " name="oldAvatarImagePublicId" value="<%= user.avatarImg.publicId %>">
+                    </form>
+                    <!--<form role="form">-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">First name</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="text" value="Jane">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Last name</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="text" value="Bishop">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Email</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="email" value="email@gmail.com">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Address</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="text" value="" placeholder="Street">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label"></label>-->
+                    <!--        <div class="col-lg-6">-->
+                    <!--            <input class="form-control" type="text" value="" placeholder="City">-->
+                    <!--        </div>-->
+                    <!--        <div class="col-lg-3">-->
+                    <!--            <input class="form-control" type="text" value="" placeholder="State">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Username</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="text" value="janeuser">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Password</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="password" value="11111122333">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input class="form-control" type="password" value="11111122333">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-group row">-->
+                    <!--        <label class="col-lg-3 col-form-label form-control-label"></label>-->
+                    <!--        <div class="col-lg-9">-->
+                    <!--            <input type="reset" class="btn btn-secondary hvr-grow mr-2" value="Cancel">-->
+                    <!--            <input type="button" class="btn btn-primary hvr-grow" value="Save Changes">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</form>-->
+                </div>
+            </div>
         </div>
     </div>
 </div>

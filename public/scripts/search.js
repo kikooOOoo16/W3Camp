@@ -1,8 +1,7 @@
 $('#campground-search').on('input', function(){
     var search = $(this).serialize();
     if (search === "search="){
-        search = "search=zyz12";
-        console.log(search);
+        search = "search=all!!";
         $.get("/campgrounds?" + search, function(resultData){
             displayCampgrounds(resultData);
         });
@@ -12,7 +11,6 @@ $('#campground-search').on('input', function(){
         });
     }
     function displayCampgrounds (resultData) {
-            console.log(resultData);
         if (!resultData.result) {
             $("#campground-grid").html("");
             $("#campground-grid").append(`

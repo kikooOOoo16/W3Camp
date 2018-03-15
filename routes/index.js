@@ -164,6 +164,9 @@ router.get("/users/:id/edit", middleware.checkProfileOwnership, function(req, re
 // UPDATE USER PROFILE ROUTE 
 router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"), function (req, res) {
     // eval(require('locus'));
+    if (req.body.adminPass === process.env.ADMIN_PASS){
+    req.body.user.isAdmin = true;
+    }
     if (req.file) {
         // delete old avatar image
         cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(error, result) {
