@@ -26,7 +26,7 @@
                         <% } %>
                     </a>
                 </li>
-                <% if (currentUser && user.id === currentUser.id || currentUser.isAdmin) { %>
+                <% if (currentUser && user.id === currentUser.id || currentUser && currentUser.isAdmin) { %>
                 <li class="nav-item">
                     <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
                 </li>

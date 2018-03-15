@@ -70,7 +70,7 @@
                                 </strong>
                                 <span class="float-right"> <%= moment(comment.createdAt).fromNow() %></span>
                                 <p><%= comment.text %></p>
-                                <% if (currentUser && currentUser._id.equals(comment.author.id)) { %>
+                                <% if (currentUser && currentUser._id.equals(comment.author.id) || currentUser && currentUser.isAdmin) { %>
                                     <!-- Collapsible Edit button -->
                                     <a class="btn btn-sm btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expended="false" aria-controls="collapse<%= comment._id %>">Edit</a>
                                     <!-- Delete comment button-->
