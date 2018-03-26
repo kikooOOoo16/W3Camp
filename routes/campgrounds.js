@@ -4,7 +4,17 @@ var express         = require("express"),
     middleware      = require("../middleware/index.js"),
     multer          = require("multer"),
     cloudinary      = require("cloudinary"),
-    NodeGeocoder    = require('node-geocoder');
+    NodeGeocoder    = require('node-geocoder'),
+    DarkSky         = require('forecast.io'),
+    moment          = require("moment"),
+    momentTimezone  = require("moment-timezone");
+
+// FORECAST config 
+var options = {
+    APIKey: process.env.FORECAST_SECRET_KEY,
+    timeout: 1000
+},
+darksky = new DarkSky(options);
 
 // NODE GEOCODER config
 var options = {
@@ -94,8 +104,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 router.post("/", middleware.isLoggedIn, upload.single("image"), function(req, res) {
     // get data from form and add to campground array
     geocoder.geocode(req.body.location, function(err, data) {
-        // console.log(process.env.GOOGLE_GEOCODER_API);
-        // eval(require("locus"));
         if (err || !data.length) {
             console.log("GEOCODER ERR: " + err);
             req.flash("error", "Invalid campground location.");
@@ -136,10 +144,24 @@ router.get("/:id", function(req, res) {
     Campground.findById(req.params.id).populate("comments").exec(function (err, foundCampground) {
         if (err || !foundCampground) {
             req.flash("error", err.message);
-            res.redirect("back");
+            return res.redirect("back");
         } else {
-            // render show template with that campground
-            res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API});
+            var options = {
+                exclude: 'minutely,hourly,flags,alerts',
+                units: 'si'
+            };
+            darksky.get(foundCampground.lat, foundCampground.lng, options, function (err, ress, data) {
+                if(err) return console.log(err);
+                // format UNIX timestamp and timezone
+                var dateString = moment.unix(data.currently.time);
+                var tzFormatted = moment(dateString).tz(data.timezone).format("MMM/DD/YY"); 
+                // determine correct icon and background to display for weather widget
+                var currentlyIcon = weatherIconDeterminator(data.currently.icon);
+                var weatherBackground = weatherBackgroundDeterminator (data.currently.icon);
+                // generate week days for weather widget
+                var dailyWeather = weatherWeekDaysGenerator(data, dateString);
+            res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather});
+            });
         }
     });
 });
@@ -244,8 +266,95 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
     });
 });
 
+// FUNCTIONS
 function escapeRegex(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
+function weatherBackgroundDeterminator (inputIcon) {
+    var weatherBackground = "";
+    switch (inputIcon) {
+        case 'clear-day':
+            weatherBackground = "../images/weatherImages/clear-day.jpg";
+            break;
+        case 'clear-night':
+            weatherBackground = "../images/weatherImages/clear-night.jpg";
+            break;
+        case 'rain' :
+            weatherBackground = "../images/weatherImages/rain.jpg";
+            break;
+        case 'snow' :
+        case 'sleet':
+            weatherBackground = "../images/weatherImages/snow.jpg";
+            break;
+        case 'wind' :
+            weatherBackground = "../images/weatherImages/wind.jpg";
+            break;
+        case 'fog' :
+            weatherBackground = "../images/weatherImages/fog.jpg";
+            break;
+        case 'cloudy' :
+        case 'partly-cloudy-day' :
+            weatherBackground = "../images/weatherImages/cloudy-day.jpg";
+            break;
+        case 'cloudy' :
+        case 'partly-cloudy-night' :
+            weatherBackground = "../images/weatherImages/cloudy-night.jpg";
+            break;
+        default : 
+            weatherBackground = "../images/weatherImages/clear-day.jpg"
+    }
+    return weatherBackground;
+}
+
+function weatherIconDeterminator(inputIcon) {
+    var outputIcon = '';
+    switch (inputIcon) {
+        case 'clear-day' : 
+            outputIcon = 'wi-day-sunny'; 
+            break;
+        case 'clear-night' : 
+            outputIcon = 'wi-night-clear';
+            break;
+        case 'rain' : 
+            outputIcon = 'wi-rain';
+            break;
+        case 'snow' : 
+            outputIcon = 'wi-snow';
+            break;
+        case 'sleet' : 
+            outputIcon = 'wi-hail';
+            break;
+        case 'wind' : 
+            outputIcon = 'wi-windy';
+            break;
+        case 'fog' : 
+            outputIcon = 'wi-fog';
+            break;
+        case 'cloudy' : 
+            outputIcon = 'wi-cloudy' ;
+            break;
+        case 'partly-cloudy-day' : 
+            outputIcon = 'wi-day-cloudy';
+            break;
+        case 'partly-cloudy-night' : 
+            outputIcon = 'wi-night-alt-cloudy';
+            break;
+        default: outputIcon = 'wi-na';
+    }
+    return outputIcon;
+}
+
+function weatherWeekDaysGenerator (data, currentDate) {
+    var days = [];
+    for (var i = 0; i < data.daily.data.length; i++) {
+        days.push ({
+            date : moment(currentDate).add(i+1,'d').format("dddd"),
+            icon : weatherIconDeterminator(data.daily.data[i].icon),
+            temperatureMin : data.daily.data[i].temperatureMin,
+            temperatureMax : data.daily.data[i].temperatureMax
+        });
+    }
+    return days;
+}
 module.exports = router;

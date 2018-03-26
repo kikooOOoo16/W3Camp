@@ -1,38 +1,41 @@
 <% include ../partials/header %>
 
-<div class="row justify-content-center">
-    <div class="col-md-12 text-center">
-        <legend class="form-header">Contact</legend>
-    </div>
-    <div class="form input-form col-7 col-md-4 col-lg-3">
-        <form action="/contact/send" method="post" id="form">
-            <div class="messages"> </div>
-            <div class="controls">
-                <div class="form-group">
-                    <label class="" for="form_name">Name</label>
-                    <input type="text" class="form-control" id="form_name" name="name" placeholder="Enter Name" required="required" data-error="Your Name is Required">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <legend class="form-header">Contact</legend>
+        </div>
+        <div class="form input-form col-9 col-sm-7 col-md-6 col-lg-4">
+            <form action="/contact/send" method="post" id="form">
+                <div class="controls">
+                    <div class="form-group">
+                        <label class="" for="form_name">Name</label>
+                        <input type="text" class="form-control" id="form_name" name="name" placeholder="Enter Name" required="required" data-error="Your Name is Required">
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="form_phone">Phone</label>
+                        <input type="tel" class="form-control" id="form_phone" name="phone" placeholder="Phone" required="required" data-error="Your Phone Number is Required">
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="form_email">Email</label>
+                        <input type="email" class="form-control" id="form_email" name="email" placeholder="Your Email Address" required="required" data-error="Your Email is Required">
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="form_message">Message</label>
+                        <textarea class="form-control" id="form_message" name="message" placeholder="Enter Message Here" rows="4" required="required" data-error="Please, leave us a message."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div id="captcha1" class="g-recaptcha form-group" data-sitekey= <%= siteKey %>></div>
+                    </div>
+                    <div class="form-group">
+                        <button id="contact-btn" class="btn btn-lg btn-primary btn-block hvr-grow">Send Email</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="" for="form_phone">Phone</label>
-                    <input type="tel" class="form-control" id="form_phone" name="phone" placeholder="Phone" required="required" data-error="Your Phone Number is Required">
-                </div>
-                <div class="form-group">
-                    <label class="" for="form_email">Email</label>
-                    <input type="email" class="form-control" id="form_email" name="email" placeholder="Your Email Address" required="required" data-error="Your Email is Required">
-                </div>
-                <div class="form-group">
-                    <label class="" for="form_message">Message</label>
-                    <textarea class="form-control" id="form_message" name="message" placeholder="Enter Message Here" rows="4" required="required" data-error="Please, leave us a message."></textarea>
-                </div>
-                <div class="form-group">
-                    <div id="captcha1" class="g-recaptcha form-group" data-sitekey= <%= siteKey %>></div>
-                </div>
-                <div class="form-group">
-                    <button id="contact-btn" class="btn btn-lg btn-primary btn-block">Send Email</button>
-                </div>
+            </form>
+            <div class="col offset-4">
+                <p class="message text-muted"><a class="text-center" href="/campgrounds">Go Back</a></p>
             </div>
-            <p class="message text-muted"><a class="text-center" href="/campgrounds">Go Back</a></p>
-        </form>
+        </div>
     </div>
 </div>
 

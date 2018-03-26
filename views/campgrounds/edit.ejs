@@ -5,7 +5,7 @@
         <div class="col-md-12 text-center">
             <legend class="form-header">Edit <%= campground.name %></legend>
         </div>
-        <div class="col-lg-5 col-md-7 col-9 mb-3">
+        <div class="col-lg-5 col-md-7 col-sm-9 mb-3">
             <div class="form input-form">
                 <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                     <div class="col">
@@ -39,11 +39,13 @@
                             <input class="form-control" type="text" name="location" id="location" value="<%= campground.location %>">
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12">
                         <div class="form-group">
                             <button class="btn btn-lg btn-primary btn-block">Update!</button>
                         </div>
-                        <a href="/campgrounds">Go Back</a>
+                    </div>
+                    <div class="col-12 offset-4">
+                        <a class="text-center ml-3" href="/campgrounds/<%= campground._id %>">Go Back</a>
                     </div>
                     <input style="position: absolute; display: none; " name="oldImagePublicId" value="<%= campground.image.publicId %>">
                 </form>

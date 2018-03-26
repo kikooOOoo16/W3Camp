@@ -105,15 +105,57 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card mt-2 mb-4 bg-secondary text-white">
-                <div class="card-header">
-                    More info
+            <table class="table-info table border text-center mt-2 mb-4">
+                <thead class="table-head">
+                    <tr>
+                        <th scope="col">More Info</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">                                    
+                    <tr>
+                        <td>
+                           <a href="https://en.wikipedia.org/w/index.php?search=<%= campground.name %>&title=Special:Search&profile=default&fulltext=1&searchToken=6uq3pmai7yxfv06ym49np4svh">About</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           <a href="/">Book now</a>
+                        </td>
+                    </tr>
+                </tbody> 
+            </table>
+            <!-- Weather Config -->
+            <div class="weather-widget mb-4 <%= weatherBackground === '../images/weatherImages/clear-night.jpg' ? "weather-lightcolor" : weatherBackground === '../images/weatherImages/cloudy-night.jpg' ? "weather-lightcolor" : weatherBackground === '../images/weatherImages/rain.jpg' ? "weather-lightcolor" : " " %>" style="background-image: url(<%= weatherBackground %>)">
+                <div class="frosted-glass">
+                    <div class="d-flex pt-2 pr-2 pl-2">
+                        <div class="place-weather mr-auto"><%= campground.name %></div>
+                        <div class="date-weather"><%= weatherTime %></div>
+                    </div>
+                    <div class="d-flex pr-2 pl-2">
+                        <div class="symbol-weather mr-auto"><i class="wi <%= currentlyIcon %>"></i></div>
+                        <div class="degrees-weather"><%= Math.round( weather.currently.temperature * 10 ) / 10 %><i class="wi wi-celsius"></i></div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1 pr-2 pl-2">
+                        <div class="descr-weather mb-1"><%= weather.currently.summary %></div>
+                    </div>
+                    <div class="d-flex mb-2 mt-2 pr-2 pl-2">
+                        <div class="mr-auto"><i class="wi wi-wind wi-from-e weather-details"></i> <%= weather.currently.windSpeed %>km/h</div>
+                        <div><i class="wi wi-humidity weather-details"></i> <%= weather.currently.precipProbability %>%</div>
+                    </div>
                 </div>
-                <ul class="list-group campinfo-list list-group-flush">
-                    <li class="list-group-item"><a href="">About</a></li>
-                    <li class="list-group-item"><a href="">Weather</a></li>
-                    <li class="list-group-item"><a href="">Book now</a></li>
-                </ul>
+                <div class="d-flex week-weather">
+                    <table id="weather-table" class="table table-striped table-sm table-hover">
+                        <tbody>
+                            <% for (var i = 0; i < 4; i++) {%>
+                            <tr>
+                                <td><%= dailyWeather[i].date %></td>
+                                <td><i class="wi <%= dailyWeather[i].icon %>"></i></td>
+                                <td><%= Math.round(dailyWeather[i].temperatureMax * 10)/10 %><i class="wi wi-celsius"></i> / <%= Math.round(dailyWeather[i].temperatureMin * 10)/10 %><i class="wi wi-celsius"></i></td>
+                            </tr>  
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- Google Maps Map -->
             <div id="map"></div> 

@@ -8,13 +8,13 @@
         <div class="row">
             <form action="/register" method="POST">
                 <div class="row">
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
                             <input class="form-control" pattern=".{3,15}" id="firstName" required title="Must be between 3 and 15 Characters" type="text" name="user[firstName]" placeholder="first name*">
                         </div>    
                     </div>
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
                             <input class="form-control" pattern=".{3,15}" id="lastName" required title="Must be between 3 and 15 Characters" type="text" name="user[lastName]" placeholder="last name*">
@@ -22,13 +22,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="email">E-mail</label>
                             <input class="form-control" type="email" id="email" name="user[email]" placeholder="example@mail.com*">
                         </div>
                     </div>
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="adminPass">Admin Password</label>
                             <input class="form-control" type="password" id="adminPass" name="adminPass" placeholder="admin password">
@@ -36,13 +36,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input class="form-control" pattern=".{3,15}" id="username" required title="Must be between 3 and 15 Characters" type="text" name="user[username]" placeholder="username*">
                         </div>
                     </div>
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input class="form-control" pattern=".{3,20}" id="password" required title="Password must be between 3 and 15 Characters" type="password" name="password" placeholder="password*">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-8">
+                    <div class="col-8 offset-2 col-md-12 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="bio">Bio</label>
                             <textarea id="bio" class="form-control" type="bio" name="user[bio]" rows="4" placeholder="Write a short description of yourself and what you enjoy about camping."></textarea>
@@ -58,13 +58,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-8">
+                    <div class="col-8 offset-2 col-md-6 offset-sm-2 offset-md-0">
                         <div class="g-recaptcha mb-3" data-sitekey=<%= siteKey %>></div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-12">
                         <button class="btn btn-lg btn-primary btn-block mx-auto">Sign up</button>
-                        <p class="message text-muted">Already registered? <a href="/login">Login</a></p>
+                        <p class="message text-muted text-center offset-2">Already registered? <a href="/login">Login</a></p>
+                    </div>
                 </div>
             </form>
         </div>
