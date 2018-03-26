@@ -154,7 +154,7 @@ router.get("/:id", function(req, res) {
                 if(err) return console.log(err);
                 // format UNIX timestamp and timezone
                 var dateString = moment.unix(data.currently.time);
-                var tzFormatted = moment(dateString).tz(data.timezone).format("MMM/DD/YY"); 
+                var tzFormatted = moment(dateString).tz(data.timezone).format("MMM/DD/YY HH:mm"); 
                 // determine correct icon and background to display for weather widget
                 var currentlyIcon = weatherIconDeterminator(data.currently.icon);
                 var weatherBackground = weatherBackgroundDeterminator (data.currently.icon);
