@@ -73,12 +73,17 @@
         <div class="container">
             <% if (error && error.length > 0) {%> 
             <div class="alert alert-danger" role="alert">
-                <%= error %>    
+                <i class="fas fa-exclamation-triangle"></i> <%= error %>    
+            </div>
+            <% } %>
+            <% if (warning && warning.length > 0) {%> 
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-info-circle"></i> <%= warning %>    
             </div>
             <% } %>
             <% if (success && success.length > 0) {%> 
             <div class="alert alert-success" role="alert">
-                <%= success %>  
+                <i class="fas fa-check-circle"></i> <%= success %>  
             </div>
             <% } %>
         </div>

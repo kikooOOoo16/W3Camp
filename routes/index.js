@@ -55,7 +55,6 @@ router.get("/register", function(req, res) {
 router.post("/register", function(req, res) {
     const captcha = req.body["g-recaptcha-response"];
     if (!captcha) {
-      console.log(req.body);
       req.flash("error", "Please select captcha");
       return res.redirect("/register");
     }
@@ -82,7 +81,7 @@ router.post("/register", function(req, res) {
                 return res.redirect("/register");
            }
             passport.authenticate("local", {successRedirect: "/campgrounds", failureRedirect: "/login"})(req, res, function() {
-                req.flash("success", "Welcome to YelpCamp " + user.username);
+                req.flash("success", "Welcome to W3Camp " + user.username);
                 res.redirect("/campgrounds");
            });
         });
@@ -102,15 +101,20 @@ router.get("/login", function(req, res) {
 router.post("/login", function(req, res, next) {
     passport.authenticate("local", function(err, user, info) { 
         if (err) {
+            console.log(err);
             return next(err);
         }
         if (!user) {
+            if (info) {
+                req.flash("error", info.message);
+            }
             return res.redirect("/login");
         }
         req.logIn(user, function(err) {
             if (err) {
                 return next(err);
             }
+            req.flash("success", "Successfully logged in!");
             var redirectTo = req.session.redirectTo ? req.session.redirectTo : '/campgrounds';
             delete req.session.redirectTo;
             res.redirect(redirectTo);
@@ -198,6 +202,7 @@ router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"
                 res.redirect("back");
            } else {
                 req.flash("success", "Profile info successfully updated!");
+                req.flash("warning", "If you change your username you are automatically logged out!");
                 res.redirect("/users/" + user.id);   
            }
         });

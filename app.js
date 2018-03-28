@@ -35,7 +35,7 @@ app.locals.moment = require("moment");
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "I choose diferent I chose the imposible, I chose Rapture",
+    secret: "I chose diferent, I chose the imposible, I chose Rapture",
     resave: false,
     saveUninitialized: false
 }));
@@ -50,6 +50,7 @@ app.use(function(req, res, next){
    res.locals.currentUser = req.user;
    res.locals.error = req.flash("error");
    res.locals.success = req.flash("success");
+   res.locals.warning = req.flash("warning");
    next();
 });
 
