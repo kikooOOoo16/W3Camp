@@ -11,7 +11,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input class="form-control" type="text" name="campground[name]" placeholder="name">
+                            <input class="form-control" type="text" name="campground[name]" placeholder="name*" required>
                         </div>
                     </div>
                     <div class="col">
@@ -23,24 +23,41 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" class="form-control" type="text" name="campground[description]" rows="4" placeholder="Write a truthful description about your chosen campground..."></textarea>
+                            <textarea id="description" class="form-control" type="text" name="campground[description]" rows="4" placeholder="Write a description about your adventures at this campground...*" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <a class="btn btn-secondary btn-sm mb-2" role="button" data-toggle="collapse" href="#collapseContactInfo" aria-expended="false" aria-controls="collapseContactInfo">
+                                <i class="fas fa-plus aria-hidden=true mr-2"></i>Add Campground Contact Info
+                            </a>
+                            <div class="collapse pl-4 pr-4 pt-2 pb-2" id="collapseContactInfo">
+                                <label for="phone">Phone</label>
+                                <input class="mb-1 form-control" type="text" name="campground[contact][phone]" id="phone" placeholder="(555)555-5555">
+                                <label for="email">E-mail</label>
+                                <input class="mb-1 form-control" type="email" name="campground[contact][email]" id="email" placeholder="nationalPark@mail.com">
+                                <label for="website">Website</label>
+                                <input class="form-control" type="text" name="campground[contact][website]" id="website" placeholder="www.campingGround.com">
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="price">Price/Night</label>
-                            <input class="form-control" type="number" name="campground[price]" placeholder="price" min="0.01" step="0.01">
+                            <input class="form-control" type="number" name="campground[price]" placeholder="price*" min="0.01" step="0.01" required>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="location">Location</label>
-                            <input class="form-control" type="text" name="location" id="location" placeholder="High Tauern National Park, AUSTRIA">
+                            <input class="form-control" type="text" name="location" id="location" placeholder="High Tauern National Park, AUSTRIA*" required>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                            <button class="btn btn-lg btn-primary btn-block mx-auto hvr-grow">Submit!</button>
                         </div>
-                        <a href="/campgrounds">Go Back</a>
+                        <div class="col text-center col-12">
+                            <a class="w-100" href="/campgrounds">Go Back</a>
+                        </div>
                     </div>
                 </form>
             </div>

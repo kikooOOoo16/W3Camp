@@ -257,7 +257,7 @@ router.post("/forgot", function (req, res, next) {
                     req.flash("error", "There was a problem sending your request.");
                     return res.redirect("/forgot");
                 } 
-                console.log("mail sent");
+                console.log("The user " + foundUser.username + " forgot his password. Sending reset mail.");
                 req.flash("success", "An e-mail has been sent to " + foundUser.email + " with further instructions.");
                 done (err, done);
             });
@@ -268,6 +268,7 @@ router.post("/forgot", function (req, res, next) {
     });
 });
 
+// RESET PASSWORD ROUTES
 router.get("/reset/:token", function(req, res) {
     User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}}, function(err, foundUser) {
         if (!foundUser || err) {
@@ -306,7 +307,7 @@ router.post("/reset/:token", function(req, res) {
                 });
             } else {
                 req.flash("error", "The passwords do not match.");
-                return res.redirect("/forgot");
+                return res.redirect("/reset/" + req.params.token);
             }
         });
     },
@@ -330,7 +331,7 @@ router.post("/reset/:token", function(req, res) {
                 req.flash("error", "There was a problem sending your request.");
                 return res.redirect("/forgot");
             } 
-            console.log("mail sent");
+            console.log("The user "+ foundUser.username + " just reset his password.");
             req.flash("success", "Success! Your password has been changed.");
             done (err, done);
         });

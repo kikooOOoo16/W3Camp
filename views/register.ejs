@@ -25,7 +25,7 @@
                     <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input class="form-control" type="email" id="email" name="user[email]" placeholder="example@mail.com*">
+                            <input class="form-control" type="email" id="email" name="user[email]" required placeholder="example@mail.com*">
                         </div>
                     </div>
                     <div class="col-8 offset-2 col-md-6 col-sm-8 offset-sm-2 offset-md-0">
@@ -53,7 +53,7 @@
                     <div class="col-8 offset-2 col-md-12 col-sm-8 offset-sm-2 offset-md-0">
                         <div class="form-group">
                             <label for="bio">Bio</label>
-                            <textarea id="bio" class="form-control" type="bio" name="user[bio]" rows="4" placeholder="Write a short description of yourself and what you enjoy about camping."></textarea>
+                            <textarea id="bio" class="form-control" type="bio" name="user[bio]" rows="4" required placeholder="Write a short description of yourself and what you enjoy about camping."></textarea>
                         </div>
                     </div>
                 </div>
@@ -64,8 +64,10 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn btn-lg btn-primary btn-block mx-auto">Sign up</button>
-                        <p class="message text-muted text-center offset-2">Already registered? <a href="/login">Login</a></p>
+                        <button class="btn btn-lg btn-primary btn-block mx-auto hvr-grow">Sign up</button>
+                    </div>
+                    <div class="col-12 text-center mt-2">
+                        <p class="text-muted">Already registered? <a href="/login">Login</a></p>
                     </div>
                 </div>
             </form>

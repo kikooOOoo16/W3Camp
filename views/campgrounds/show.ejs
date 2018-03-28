@@ -119,7 +119,20 @@
                     </tr>
                     <tr>
                         <td>
-                           <a href="/">Book now</a>
+                            <a class="card-link" role="button" data-toggle="collapse" href="#bookInfo" aria-expended="false" aria-controls="bookInfo">
+                                <!--<i class="fas fa-plus aria-hidden=true mr-2"></i>-->Book now
+                            </a>
+                            <div class="collapse text-left" id="bookInfo">
+                                <% if (campground.contact.phone) { %>
+                                    <strong>Phone:</strong> <%= campground.contact.phone %> <br />
+                                <% } if (campground.contact.email) { %>
+                                    <strong>Email:</strong> <a href="mailto:<%= campground.contact.email %>"><%= campground.contact.email %></a> <br />
+                                <% } if (campground.contact.website) { %>
+                                    <strong>Website: </strong><a href="<%= campground.contact.website %>"><%= campground.contact.website %></a>
+                                <% } if (campground.contact.email == undefined && campground.contact.phone == undefined && campground.contact.website == undefined) { %>
+                                    No booking info available at this time.
+                                <% } %>
+                            </div> 
                         </td>
                     </tr>
                 </tbody> 
