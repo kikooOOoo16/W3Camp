@@ -1,10 +1,7 @@
 $('#campground-search').on('input', function(){
     var search = $(this).serialize();
     if (search === "search="){
-        search = "search=all!!";
-        $.get("/campgrounds?" + search, function(resultData){
-            displayCampgrounds(resultData);
-        });
+        location.reload(true);
     } else {
         $.get("/campgrounds?" + search, function(resultData){
         displayCampgrounds(resultData);
@@ -14,8 +11,8 @@ $('#campground-search').on('input', function(){
         if (!resultData.result) {
             $("#campground-grid").html("");
             $("#campground-grid").append(`
-                <div class="container">
-                    <h4 class="mb-2 mt-2"> No campgrounds match that query. </h4>
+                <div class="container justify-content-center d-flex">
+                    <h4 class="mb-2 mt-3 text-center"> No campgrounds match that query. </h4>
                 </div>
             `);
         } else {
