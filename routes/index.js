@@ -263,7 +263,11 @@ router.post("/forgot", function (req, res, next) {
             });
         }, 
     ], function (err) {
-        if (err) return next(err);
+        if (err) {
+            req.flash("error", "Something went wrong.");
+            console.log("Forgot password error : " + err);
+            return next(err);
+        }
         res.redirect("/forgot");
     });
 });
@@ -290,7 +294,7 @@ router.post("/reset/:token", function(req, res) {
             if (req.body.password === req.body.confirm) {
                 foundUser.setPassword(req.body.password, function(err) {
                     if (err) {
-                        req.flash("error", "Something went wrong.");
+                        req.flash("error", "Something went wrong while changing your password.");
                         return res.redirect("/forgot");
                     }
                     foundUser.resetPasswordToken = undefined;
@@ -322,20 +326,21 @@ router.post("/reset/:token", function(req, res) {
         var mailOptions = {
             to: foundUser.email,
             from: "w3CampApp@gmail.com",
-            subject: "Your password has been changed",
+            subject: "Your password on W3Camp has been changed",
             text: "Hello \n \n" + 
-            "This is a confirmation that the password for your account " + foundUser.username + " with the email: " + foundUser.email + " has just been changed. \n"
+            "This is a confirmation that the password for your account " + foundUser.username + " registered under the name " + foundUser.firstName + " " + foundUser.lastName+ " has just been changed. \n"
         }
         smtpTransport.sendMail(mailOptions, function (err) {
             if (err) {
                 req.flash("error", "There was a problem sending your request.");
                 return res.redirect("/forgot");
             } 
+            // eval(require("locus"))
             console.log("The user "+ foundUser.username + " just reset his password.");
             req.flash("success", "Success! Your password has been changed.");
             done (err, done);
         });
-    }
+    },
     ], function (err) {
         if (err) {
             req.flash("error", "Something went wrong.");
