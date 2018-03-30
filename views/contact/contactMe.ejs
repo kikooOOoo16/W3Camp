@@ -1,42 +1,40 @@
 <% include ../partials/header %>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-            <legend class="form-header">Contact</legend>
-        </div>
-        <div class="form input-form col-9 col-sm-7 col-md-6 col-lg-4">
-            <form action="/contact/send" method="post" id="form">
-                <div class="controls">
-                    <div class="form-group">
-                        <label class="" for="form_name">Name</label>
-                        <input type="text" class="form-control" id="form_name" name="name" placeholder="Enter Name*" required="required" data-error="Your Name is Required">
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="form_phone">Phone</label>
-                        <input type="tel" class="form-control" id="form_phone" name="phone" placeholder="Phone*" required="required" data-error="Your Phone Number is Required">
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="form_email">Email</label>
-                        <input type="email" class="form-control" id="form_email" name="email" placeholder="Your Email Address*" required="required" data-error="Your Email is Required">
-                    </div>
-                    <div class="form-group">
-                        <label class="" for="form_message">Message</label>
-                        <textarea class="form-control" id="form_message" name="message" placeholder="Enter Message Here*" rows="4" required="required" data-error="Please, leave us a message."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <div id="captcha1" class="g-recaptcha form-group" data-sitekey= <%= siteKey %>></div>
-                    </div>
-                    <div class="form-group">
-                        <button id="contact-btn" class="btn btn-lg btn-primary btn-block hvr-grow mx-auto">Send Email</button>
-                    </div>
+<div class="row d-flex justify-content-center frosted-glass2 col-9 col-sm-5 col-col-md-5 col-lg-4 mt-4 mb-2 pt-2">
+    <div id="contact-form" class="form col-11 col-sm-11 col-md-10 col-lg-9 ">
+        <form action="/contact/send" method="post" id="form">
+            <div class="controls">
+                <div class="form-group">
+                    <label class="" for="form_name">Name</label>
+                    <input type="text" class="form-control" id="form_name" name="name" placeholder="Enter Name*" required="required" data-error="Your Name is Required">
                 </div>
-            </form>
-            <div class="col-12 text-center">
-                <p class="text-muted"><a href="/campgrounds">Go Back</a></p>
+                <div class="form-group">
+                    <label class="" for="form_phone">Phone</label>
+                    <input type="tel" class="form-control" id="form_phone" name="phone" placeholder="Phone*" required="required" data-error="Your Phone Number is Required">
+                </div>
+                <div class="form-group">
+                    <label class="" for="form_email">Email</label>
+                    <input type="email" class="form-control" id="form_email" name="email" placeholder="Your Email Address*" required="required" data-error="Your Email is Required">
+                </div>
+                <div class="form-group">
+                    <label class="" for="form_message">Message</label>
+                    <textarea class="form-control" id="form_message" name="message" placeholder="Enter Message Here*" rows="4" required="required" data-error="Please, leave us a message."></textarea>
+                </div>
+                <div class="form-group">
+                    <div id="captcha1" class="g-recaptcha form-group" data-sitekey= <%= siteKey %> style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+                </div>
+                <div class="form-group">
+                    <button id="contact-btn" class="btn btn-lg btn-primary btn-block hvr-grow mx-auto">Send</button>
+                </div>
             </div>
+        </form>
+        <div class="col-12 text-center">
+            <p class="text-muted"><a href="/campgrounds">Go Back</a></p>
         </div>
     </div>
+</div>
+<div class="invisible">
+    kjkj
 </div>
 
 <% include ../partials/footer %>

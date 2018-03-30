@@ -96,7 +96,7 @@ router.get("/", function(req, res) {
 
 // NEW - show form to create new campground
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-   res.render("campgrounds/new"); 
+   res.render("campgrounds/new", {page: "newCampground"}); 
 });
 
 // CREATE - add new campground to database
@@ -168,7 +168,7 @@ router.get("/:id", function(req, res) {
 // EDIT CAMPGROUND
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
    Campground.findById(req.params.id, function(err, foundCampground){
-        res.render("campgrounds/edit", {campground: foundCampground});
+        res.render("campgrounds/edit", {campground: foundCampground, page: "editCampground"});
    });
 });
 

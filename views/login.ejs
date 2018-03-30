@@ -1,26 +1,29 @@
 <% include ./partials/header %>
 
-<div class="row justify-content-center">
-    <div class="col-md-12 text-center">
-        <legend class="form-header">Login</legend>
+<div class="frosted-glass2 col-9 col-sm-5 col-col-md-5 col-lg-3 mt-4 mb-2">
+    <div class="row justify-content-center ">
+        <div class="col-12 mt-2 mb-2 d-flex justify-content-center login-form-avatar">
+                <img src="images/defaultAvatarGrey_2.png" alt="AVATAR">
+        </div>
+        <div id="login-form" class="form col-11 col-lg-10 mt-1">
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <input class="form-control" id="username" type="text" name="username" placeholder="&#xf2bd; username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="password" type="password" name="password" placeholder="&#xf023; password">
+                    <p class="message"><a href="/forgot">Forgot your password?</a></p>
+                </div>
+                <button class="btn btn-primary btn-block mx-auto hvr-grow">Login!</button>
+                <div class="col-12 text-center mt-2">
+                    <p class="message">Don't have an account yet? Sign up here:  <a href="/register"> Sign Up</a></p>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form input-form col-7 col-md-4 col-lg-3">
-        <form action="/login" method="POST">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input class="form-control" id="username" type="text" name="username" placeholder="username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" id="password" type="password" name="password" placeholder="password">
-                <p class="message"><a href="/forgot">Forgot your password?</a></p>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block mx-auto hvr-grow">Login!</button>
-            <div class="col-12 text-center mt-2">
-                <p class="text-muted">Don't have an account yet? Sign up here:  <a href="/register"> Sign Up</a></p>
-            </div>
-        </form>
-    </div>
+</div>
+<div class="invisible">
+    kjkj
 </div>
 
 <% include ./partials/footer %>
