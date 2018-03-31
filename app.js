@@ -18,7 +18,8 @@ var express     = require("express"),
 var commentRoutes     = require("./routes/comments"),
     campgroundRoutes  = require("./routes/campgrounds"),
     indexRoutes       = require("./routes/index"),
-    contactRoutes     = require("./routes/contact");
+    contactRoutes     = require("./routes/contact"),
+    forumTopicsRoutes = require("./routes/forumTopics");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URL, {useMongoClient: true});
@@ -59,6 +60,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/contact", contactRoutes);
+app.use("/forumTopics", forumTopicsRoutes);
 
 app.listen(process.env.PORT, process.env.ID, function() {
     console.log("The W3Camp server has started.");

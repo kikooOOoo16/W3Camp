@@ -28,6 +28,9 @@
                         <li class="nav-item <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>">
                             <a class="nav-link" href="/campgrounds"><i class="fas fa-home"></i> Home</a>
                         </li>  
+                        <li class="nav-item <%= typeof page !== 'undefined' && page === 'forumTopics' ? 'active' : '' %>">
+                            <a class="nav-link" href="/forumTopics">Forum</a>
+                        </li>  
                         <li class="nav-item <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
                             <a class="nav-link" href="/contact">Contact Us</a>
                         </li>
@@ -35,13 +38,13 @@
                     <ul class="navbar-nav navbar-right">
                         <% if(!currentUser){ %>
                             <li class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
-                                <a class="nav-link" href="/login">Login</a>
+                                <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
                             </li>
-                            <li class="nav-item<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
-                                <a class="nav-link" href="/register">Sign Up</a>
+                            <li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
+                                <a class="nav-link" href="/register"><!--<i class="fas fa-user-plus"></i> --> Sign Up</a>
                             </li>
                         <% } else if (currentUser.isAdmin){ %>
-                            <li class="nav-item<%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
+                            <li class="nav-item <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="inset">
                                         <img src="<%= currentUser.avatarImg.url %>" class="img-circle">
@@ -49,8 +52,8 @@
                                     Admin: <%= currentUser.username %>
                                 </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>">View Profile</a>
-                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a>
+                                        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                     </div>
                         <% } else {%>
                             <li class="nav-item<%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
@@ -61,8 +64,8 @@
                                     <%= currentUser.username %>
                                 </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>">View Profile</a>
-                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a>
+                                        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                     </div>
                             </li>
                         <% } %>

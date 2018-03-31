@@ -248,7 +248,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
             // delete image on cloudinare cloud server
            cloudinary.uploader.destroy(foundCampground.image.publicId, function(error, result) {
                 if (error) {
-                    console.log(error);
+                    console.log("Cloudinary image destory err : " + error);
                 }
                 Campground.findByIdAndRemove(req.params.id, function(err){
                     if (err) {

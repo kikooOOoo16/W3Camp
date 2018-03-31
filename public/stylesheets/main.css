@@ -567,3 +567,24 @@ body {
     width: 50%;
     display: block;
 }
+
+    /*________FORUM SHOW DISCUSSION TOPIC__________*/
+.user-discussion-badge {
+    min-height: 150px !important;
+}
+.user-discussion-avatarimg {
+    display: block;
+    width: 4.5em;
+    height: 4.5em;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;    
+}
+.user-discussion-avatarimg img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+    display: block;
+    position: relative;
+    z-index: 998;
+}

@@ -1,6 +1,7 @@
 // all the middleware goes here
-var Campground = require("../models/campground");
-var Comment = require("../models/comment");
+var Campground      = require("../models/campground"),
+    Comment         = require("../models/comment"),
+    ForumTopic      = require("../models/forumTopic");
 
 var middlewareObj = {
     checkCampgroundOwnership: function(req, res, next){
@@ -73,8 +74,32 @@ var middlewareObj = {
         }
         req.flash("error", "You need to be logged in to do that");
         res.redirect("/login");
-    }
+    },
     
+    checkForumTopicOwnership: function (req, res, next) {
+        // is user logged in
+        if(req.isAuthenticated()) {
+            ForumTopic.findById(req.params.id, function(err, foundForumTopic){
+                if (err || !ForumTopic) { //null return patch !null = true
+                    req.flash("error", "Forum topic not found.");
+                    res.redirect("back");
+                } else {
+                    // does user own the campground foundCampground.author.id is a mongoose object
+                    if(foundForumTopic.author.id.equals(req.user._id) || req.user.isAdmin){
+                        next();
+                    } else {
+                    // otherwise, redirect
+                    req.flash("error", "You don't have permission to do that.");
+                    res.redirect("back");
+                    }
+                }
+            });
+        } else {
+            // if not, redirect
+            req.flash("error", "You need to be logged in to do that.");
+            res.redirect("/login");
+        }
+    }
 }
 
 module.exports = middlewareObj;
