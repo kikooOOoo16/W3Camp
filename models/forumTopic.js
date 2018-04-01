@@ -11,7 +11,13 @@ var forumTopicSchema = new mongoose.Schema ({
             ref: "User"
         },
         username: "String"
-    }
+    },
+    posts : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "ForumPost"
+        }
+    ]
 });
 
 module.exports = mongoose.model("forumTopic", forumTopicSchema);

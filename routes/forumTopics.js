@@ -41,7 +41,7 @@ router.post("/", middleware.isLoggedIn, function (req,res) {
 
 // SHOW - Shows the discussion info about a particular forum topic 
 router.get("/:id", function(req, res) {
-    ForumTopic.findById(req.params.id, function(err, foundForumTopic) {
+    ForumTopic.findById(req.params.id).populate("posts").exec(function(err, foundForumTopic) {
         if (err || !foundForumTopic) {
             req.flash("error", "There was an error while loading your selected topic.");
             return res.redirect("/forumTopics");
