@@ -2,7 +2,8 @@ var express         = require("express"),
     router          = express.Router(),
     middleware      = require("../middleware/index.js"),
     ForumTopic      = require("../models/forumTopic"),
-    User            = require("../models/user");
+    User            = require("../models/user"),
+    LatestPosts     = require("../models/latestPosts");
     
     
 // INDEX - show all forum topics
@@ -13,13 +14,19 @@ router.get("/", function (req,res) {
             console.log("foundForums " + foundForumTopic);
             return res.redirect("/campgrounds");
         }
-        res.render("forumTopics/index", {page: "forumTopics", forumTopic: foundForumTopic});
+        LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function(err, latestPostsArray) {
+            if (err) {
+                req.flash("error", "There was an error with the latest posts functionality.");
+                return res.redirect("/campgrounds");
+            }
+            res.render("forumTopics/index", {page: "forumTopics", forumTopic: foundForumTopic, latestPosts: latestPostsArray});
+        });
     });
 });
 
 // NEW - show form to create new forum topic
 router.get("/new", middleware.isLoggedIn, function (req,res) {
-    res.render("forumTopics/new");
+    res.render("forumTopics/new",  {page: "newForumTopic"});
 });
 
 // CREATE - add new forum topic to database
@@ -62,7 +69,7 @@ router.get("/:id/edit", middleware.checkForumTopicOwnership, function(req, res) 
         if (err) {
             req.flash("error", "There was an error loading the edit form for your topic.")
         }
-        res.render("forumTopics/edit", {forumTopic: foundForumTopic});
+        res.render("forumTopics/edit", {forumTopic: foundForumTopic, page: "editForumTopic"});
     });
 });
 

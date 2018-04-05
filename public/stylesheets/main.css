@@ -43,6 +43,20 @@ body {
     background-repeat: no-repeat;
     background-position: center center; 
 }
+.newForumTopic-bkg {
+    background-image: url(../../images/backgrounds/newForumTopic.jpg);
+    background-size: cover; 
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+.editForumTopic-bkg {
+    background-image: url(../../images/backgrounds/editForumTopic.jpg);
+    background-size: cover; 
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
 .frosted-glass2 {
     background: inherit;
     position: relative;
@@ -404,25 +418,25 @@ body {
 
 
     /*________FORMS STYLING________*/
-.campground-new-edit-form {
+.general-style-form {
     color: #ffffff; 
     font-family: 'Josefin Sans', sans-serif;
 }
-.campground-new-edit-form a {
+.general-style-form a {
     color: #01A0BA;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
 }
-.campground-new-edit-form .col .form-group>a {
+.general-style-form .col .form-group>a {
     color: #ffffff;
 }
-.campground-new-edit-form button {
+.general-style-form button {
     background-color: #01A0BA;
     border: none;
 } 
-.campground-new-edit-form button:hover {
+.general-style-form button:hover {
     background-color: #01A0BA;
 }
 #contact-form {
@@ -606,6 +620,44 @@ body {
     /*font-family: 'Maven Pro', sans-serif;*/
 }
 .forum-table-author{
+    font-size: 11pt;
+}
+.forum-date {
+    font-size: 10pt;
+    color: #575C61;
+}
+.forum-no-topics-txt {
+    font-size: 11pt;
+    color: #343A40;
+}
+.forum-recentposts-table{
+    margin-top: 47px;
+}
+.forum-recentposts-table .thead {
+    background-color: #6C757D;
+    color: #ffffff;
+}
+.forum-recentposts-table tbody {
+    background-color: #D6DCDC;
+    color: #343A40;
+}
+.latest_p_topic { 
+    font-weight: 700;
+    font-size: 13pt;
+}
+.latest_p_topic>a { 
+    color: #343A40;
+}
+/*#6C757D*/
+.latest_p_author {
+    font-size: 11pt;
+}
+.latest_p_author>a {
+    color: #6C757D;
+}
+.latest_p_text { 
+    font-size: 11pt;
+    margin-top: 5px;
 }
     
     

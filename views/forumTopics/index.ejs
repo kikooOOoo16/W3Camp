@@ -5,16 +5,17 @@
         <h3 class="mt-4 mb-4 title-forum">W3Camp forum</h3>
     </div>
 </div>
-<div class="container sample-section-wrap">
-    <div class="row sample-section">
-        <div class="col-md-10">
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
             <a href="/forumTopics/new" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-pencil-alt"></i> New topic</a>
+            <a href="/contact" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Request category</a>
             <a href="/campgrounds" class="btn btn-secondary btn-sm mb-3"><i class="far fa-arrow-alt-circle-left"></i> Back</a>
             <div class="table-responsive mb-4">
                 <table class="table table-hover">
                     <thead class="thead-forum">
                         <tr>
-                            <th colspan="3">Site information</th>
+                            <th colspan="3"><i class="fas fa-info-circle"></i> Site information</th>
                         </tr>
                     </thead>
                     <tbody class="forum-tbody">
@@ -30,10 +31,10 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-row justify-content-end">
-                                            <div class="forum-table-author">
-                                                By: <%= disscusionTopic.author.username %>
+                                            <div class="forum-table-author mr-4">
+                                                By: <a href="/users/<%= disscusionTopic.author.id %>"><%= disscusionTopic.author.username %></a>
                                             </div>
-                                            <div class="forum-date">
+                                            <div class="d-flex align-items-center forum-date">    
                                                 Created : <%= moment(disscusionTopic.createdAt).fromNow() %>
                                             </div>
                                         </div>
@@ -42,7 +43,7 @@
                             <% } %>
                         <% }); %>
                         <% if (!counter || typeof forumTopic === "undefined") { %>
-                            <tr>
+                            <tr class="forum-no-topics-txt">
                                 <td>There are no topics for this category yet.</td>
                             </tr>
                         <% } else if (counter) { counter = true }%>
@@ -54,7 +55,7 @@
                 <table class="table table-hover">
                     <thead class="thead-forum">
                         <tr>
-                            <th colspan="3">Campground discussions</th>
+                            <th colspan="3"><i class="fas fa-fire"></i> Campground discussions</th>
                         </tr>
                     </thead>
                     <tbody class="forum-tbody">
@@ -70,10 +71,10 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-row justify-content-end">
-                                            <div class="forum-table-author">
-                                                By: <%= disscusionTopic.author.username %>
+                                            <div class="forum-table-author mr-4">
+                                                By: <a href="/users/<%= disscusionTopic.author.id %>"><%= disscusionTopic.author.username %></a>
                                             </div>
-                                            <div class="forum-date">
+                                            <div class="forum-date d-flex align-items-center">
                                                 Created : <%= moment(disscusionTopic.createdAt).fromNow() %>
                                             </div>
                                         </div>
@@ -82,7 +83,7 @@
                             <% } %>
                         <% }); %>
                         <% if (!counter || typeof forumTopic === "undefined") { %>
-                            <tr>
+                            <tr class="forum-no-topics-txt">
                                 <td>There are no topics for this category yet.</td>
                             </tr>
                         <% } else if (counter) { counter = true }%>
@@ -94,7 +95,7 @@
                 <table class="table table-hover">
                     <thead class="thead-forum"> 
                         <tr>
-                            <th colspan="3">General</th>
+                            <th colspan="3"><i class="fas fa-coffee"></i> General</th>
                         </tr>
                     </thead class="forum-tbody">
                         <tbody class="forum-tbody">
@@ -109,11 +110,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex flex-row justify-content-end">
-                                            <div class="forum-table-author">
-                                                By: <%= disscusionTopic.author.username %>
+                                        <div class="d-flex flex-row justify-content-end mr-4">
+                                            <div class="forum-table-author mr-4">
+                                                By: <a href="/users/<%= disscusionTopic.author.id %>"><%= disscusionTopic.author.username %></a>
                                             </div>
-                                            <div class="forum-date">
+                                            <div class="forum-date d-flex align-items-center">
                                                 Created : <%= moment(disscusionTopic.createdAt).fromNow() %>
                                             </div>
                                         </div>
@@ -122,7 +123,7 @@
                             <% } %>
                         <% }); %>
                         <% if (!counter || typeof forumTopic === "undefined") { %>
-                            <tr>
+                            <tr class="forum-no-topics-txt">
                                 <td>There are no topics for this category yet.</td>
                             </tr>
                         <% } else if (counter) { counter = true }%>
@@ -130,6 +131,32 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="col-md-3 forum-recentposts-table">
+            <table class="table table-hover table-striped">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">Latest Posts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (latestPosts && latestPosts.posts.length > 0) { %>
+                        <% latestPosts.posts.forEach(function (post) { %>
+                            <tr>
+                                <td class="d-flex flex-column">
+                                    <div class="latest_p_topic"><a href="/forumTopics/<%= post.postTopicId %>"><%= post.postTopic.substring(0,37) %></a>...</div>
+                                    <div class="latest_p_author text-muted m-0">By <a href="/users/<%= post.author.id %>"><%= post.author.username.substring(0,30) %></a></div>
+                                    <div class="latest_p_text"><%= post.text.substring(0,60) %>...</div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                            <tr>
+                                <td class="text-muted">No posts yet.</td>
+                            </tr>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

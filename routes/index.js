@@ -69,7 +69,7 @@ router.post("/register", function(req, res) {
             return res.redirect("/register");
         }
         req.body.user.avatarImg = {
-            url : "/images/defaultAvatar.png"
+            url : "/images/defaultAvatarGrey_2.png"
         }; 
         if (req.body.adminPass === process.env.ADMIN_PASS){
             req.body.user.isAdmin = true;

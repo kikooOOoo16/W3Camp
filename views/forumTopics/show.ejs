@@ -75,6 +75,7 @@
                     <div>
                         <a class="btn btn-sm btn-warning mr-2 mb-2 float-left" role="button" data-toggle="collapse" href="#collapseEditPost<%= post._id %>" aria-expended="false" aria-controls="collapse<%= post._id %>">Edit</a>
                         <form action="/forumTopics/<%= forumTopic.id %>/forumPosts/<%= post._id %>?_method=DELETE" method="POST">
+                            <input style="position: absolute; display: none; " name="postText" value="<%= post.text %>">
                             <button class="btn btn-sm btn-danger mb-2">Delete</button>    
                         </form>
                         <!--Collapsible edit post form -->
@@ -103,6 +104,7 @@
             <% }); %>
         <% } %>
     </div>
+    <!-- add new post form -->
     <div class="row">
         <div class="d-flex flex-row bg-light border rounded col-12 mt-4 mb-4"> 
             <div class="user-discussion-badge d-flex flex-column justify-content-center col-2 border-right  pr-1 pl-1">

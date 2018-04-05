@@ -21,7 +21,8 @@ var commentRoutes     = require("./routes/comments"),
     forumPostsRoutes  = require("./routes/forumPosts");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASE_URL, {useMongoClient: true});
+// mongoose.connect(process.env.DATABASE_URL, {useMongoClient: true});
+mongoose.connect(process.env.MLAB_DATABASE_URL, {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
