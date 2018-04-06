@@ -244,10 +244,10 @@ body {
 }
 #campground-search{
     width: 210px;
-    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-size: 11pt;
+    font-family: 'FontAwesome', "Open Sans", Verdana, sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 11pt;
     text-decoration: inherit;
 }
 .btn-hover-shadow {
@@ -584,28 +584,54 @@ body {
 
 
     /*____________FORUM INDEX PAGE____________*/
-.forum-banner {
-    margin-top: 1.2em;
-    margin-bottom: 2.2em;
-    color: #ffffff;
-    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0), 
-    3px 5px 3px rgba(0, 0, 0, 0.1),
-    6px 8px 6px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0), 
-    3px 5px 3px rgba(0, 0, 0, 0.1),
-    6px 8px 6px rgba(0, 0, 0, 0.3);
+.parallax {
+    background-image: url('../../images/backgrounds/forumIndex.jpg');
+    min-height: 260px; 
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .title-forum {
-    padding-left: 2.6em;
     font-family: 'Raleway', sans-serif;
     font-weight: 900;
     font-size: 33pt;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    border: 5px solid #fff;
+    padding: .5em 3em;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+.forumIndex-nav {
+    background: #222;
+    width: 100%
+}
+.forumIndex-nav a {
+    color: #ffffff;
+    padding:10px 15px;
+    font-size:1em;
+    display:inline-block
+}
+.forumIndex-nav a:hover {
+    background: #333;
+    color: #A7ADB1;
+    text-decoration: none;
 }
 .fa-arrow-alt-circle-left{
     font-size: 1.1em;
 }
 .thead-forum {
-    /*font-family: 'Nunito', sans-serif;*/
     font-size: 12pt;
     letter-spacing: 0.07em;
     background-color: #343A40;
@@ -617,7 +643,6 @@ body {
 .forum-tbody a {
     color: #343A40;
     font-weight: 500;
-    /*font-family: 'Maven Pro', sans-serif;*/
 }
 .forum-table-author{
     font-size: 11pt;
@@ -629,9 +654,6 @@ body {
 .forum-no-topics-txt {
     font-size: 11pt;
     color: #343A40;
-}
-.forum-recentposts-table{
-    margin-top: 47px;
 }
 .forum-recentposts-table .thead {
     background-color: #6C757D;
@@ -648,7 +670,6 @@ body {
 .latest_p_topic>a { 
     color: #343A40;
 }
-/*#6C757D*/
 .latest_p_author {
     font-size: 11pt;
 }
@@ -662,7 +683,33 @@ body {
     
     
         /*________FORUM SHOW DISCUSSION TOPIC__________*/
+.forum-topic-nav {
+    background-color: #53A2A9;
+    color: #ffffff;
+    height: 50px;
+    font-size: 11pt;
+    font-weight: 600;
+}
+.forum-topic-nav a {
+    color: #ffffff;
+}
+.forum-topic-name {
+    font: bold 330%/100% "Lucida Grande";
+    font-size: 50pt;
+    position: relative;
+    color: #464646;
+}
+.forum-topic-name span {
+    background: url(gradient.png) repeat-x;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 31px;
+}
 .user-discussion-badge {
+    border-right: 10px solid #53A2A9;
+    color: #ffffff;
+    background-color: #1D242C; 
     min-height: 150px !important;
 }
 .user-discussion-avatarimg {
@@ -681,9 +728,89 @@ body {
     position: relative;
     z-index: 998;
 }
+.forum-userbadge-author>a {
+    color: #DEDEDD;
+    font-weight: 700;
+}
+.forum-userbadge-admin{
+    color: #B0B0B2;
+    font-size: 10.7pt;
+}
+.forum-userbadge-numposts{
+    color: #DEDEDD;
+    font-weight: 400;
+}
+.forum-userbadge-joindate {
+    color: #DEDEDD;
+    font-size: 10pt;
+}
+.post-container {
+    word-wrap: break-word;   
+    background-color: #1D242C;
+    color: #F1F2F2;
+}
+.forumpost-top-bar{
+    min-height: 40px;
+    background-color: #53A2A9;
+    width: 100%;
+}
+.initial-topic-header{
+    color: #F6F6F6;
+    font-size: 19pt;
+}
+.forumPost-date {
+    color: #F6F6F6;
+    font-weight: 400;
+    font-size: 11pt;
+}
+.topic-initial-post>div>div>a {
+    background-color: #53A2A9;
+}
+div.flex-column>div>a.editpost-btn {
+    background-color: #53A2A9;
+    color: #ffffff;
+}
+div.flex-column>div>a.editpost-btn:hover {
+    background-color: #3C8C95;
+}
 .forum-newpost-text {
     min-height: 100px !important;
 }
-.post-container {
-    word-wrap: break-word;    
+.edit-post-form {
+    border-left: 7px solid #53A2A9;
+}
+.edit-post-form>.card-body{
+    background-color: #1D242C;
+}
+.edit-post-form>.card-body input {
+    background-color: #373D44;
+    color: #F6F6F6;
+}
+.edit-post-form>.card-body textarea {
+    background-color: #373D44;
+    color: #F6F6F6;
+}
+.edit-post-form>.card-body button {
+    background-color: #53A2A9;
+    border: none;
+    color: #F6F6F6;
+}
+.edit-post-form>.card-body button:hover {
+    background-color: #3C8C95;
+} 
+div.newpost-input-form-avatar.d-flex.flex-row.bg-light.border.col-12.mt-4.mb-4 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.newpost-input-form {
+    background-color: #1D242C;
+    color: #ffffff;
+}
+.newpost-input-form>form>div>textarea {
+    background-color: #373D44;
+    color: #ffffff;
+}
+.newpost-input-form>form>div>textarea:focus {
+    background-color: #373D44;
+    color: #ffffff;
 }

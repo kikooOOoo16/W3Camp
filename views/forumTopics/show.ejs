@@ -1,43 +1,50 @@
 <% include ../partials/header %>
+<div class="row forum-topic-nav">
+    <div class="container d-flex flex-row align-items-center">
+        <div class="mr-2"><a href="/forumTopics">Forum</a></div>  <i class="fas fa-angle-right mr-2"></i> <div><%= forumTopic.name %></div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="mt-3 mb-3 col-12">
-            <h2><%= forumTopic.name %> </h2>        
+            <h2 class="forum-topic-name"><span></span><%= forumTopic.name %> </h2>        
         </div>
-        <div class="d-flex flex-row bg-light border rounded col-12">
-            <div class="user-discussion-badge d-flex justify-content-center flex-column border-right col-2 pr-1 pl-1">
+        <div class="d-flex flex-row bg-light border rounded">
+            <div class="user-discussion-badge d-flex justify-content-center flex-column col-2 pr-1 pl-1">
                 <div class="user-discussion-avatarimg mt-2">
                     <img src="<%= forumTopicAuthor.avatarImg.url %>" alt="/images/defaultAvatar.png">    
                 </div>
-                <div class="mx-auto mt-2">
+                <div class="forum-userbadge-author mx-auto mt-2">
                     <a href="/users/<%= forumTopicAuthor._id %>"><%= forumTopicAuthor.username %></a>    
                 </div>
-                <div class="mx-auto">
+                <div class="forum-userbadge-admin mb-2 mx-auto">
                     <% if (forumTopicAuthor.isAdmin) {%>
-                    <p class="text-muted mt-0 mb-0">Site admin</p>
+                    <p class="mt-0 mb-0">Site admin</p>
                     <% } %>
                 </div>
-                <div class="mx-auto">
-                    <p class="text-muted mt-0 mb-0">Posts: 20</p>
+                <div class="forum-userbadge-numposts mt-2 mx-auto">
+                    <p class="mt-0 mb-0">Posts: 20</p>
                 </div>
-                <div class="mx-auto">
-                    <p class="text-muted mt-2">Joined: 12/03/2018</p>
+                <div class="forum-userbadge-joindate mx-auto">
+                    <p class="mt-1">Joined: 12/03/2018</p>
                 </div>
             </div>
-            <div class="topic-initial-post flex-column col-10 p-3 text-justify post-container">
-                <div>
-                    <h4>Initial topic post</h4>
-                    <p class="text-muted mt-0"><%= moment(forumTopic.createdAt).fromNow() %></p>
+            <div class="topic-initial-post flex-column text-justify post-container">
+                <div class="forumpost-top-bar d-flex flex-row">
+                        <h4 class="initial-topic-header mt-1 mb-0">Initial topic post</h4>
+                        <p class="forumPost-date mt-2 mr-4 mb-0 ml-auto"><%= moment(forumTopic.createdAt).fromNow() %></p>
                 </div>
-                <p><%= forumTopic.description %></p>
-                <% if (currentUser &&  currentUser._id.equals(forumTopic.author.id) || currentUser && currentUser.isAdmin) { %>
-                <div class="d-flex flex-row justify-content-end">
-                    <a href="/forumTopics/<%= forumTopic._id %>/edit" class="btn btn-sm btn-info mr-2">Edit</a>
-                    <form action="/forumTopics/<%= forumTopic.id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-sm btn-danger">Delete</button>    
-                    </form>
+                <div class="p-4">
+                    <p><%= forumTopic.description %></p>
+                    <% if (currentUser &&  currentUser._id.equals(forumTopic.author.id) || currentUser && currentUser.isAdmin) { %>
+                    <div class="d-flex flex-row justify-content-start">
+                        <a href="/forumTopics/<%= forumTopic._id %>/edit" class="btn btn-sm btn-info mr-2">Edit</a>
+                        <form action="/forumTopics/<%= forumTopic.id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete</button>    
+                        </form>
+                    </div>
+                    <% } %>
                 </div>
-                <% } %>
             </div>
         </div>
         <!--Posts related to this topic-->
@@ -45,25 +52,25 @@
             <h3 class="m-4">There are no replies on this topic yet.</h3>
         <% } else { %>
             <% forumTopic.posts.forEach(function(post) { %>
-            <div class="d-flex flex-row bg-light border rounded col-12">
-                <div class="user-discussion-badge d-flex justify-content-center flex-column border-right col-2 pr-1 pl-1">
+            <div class="d-flex flex-row border bg-light">
+                <div class="user-discussion-badge d-flex justify-content-center flex-column col-2 pr-1 pl-1">
                     <div class="user-discussion-avatarimg mt-2">
                         <!--<img src="<%= post.author.avatarImgUrl %>" alt="/images/defaultAvatarGrey_2.png"> -->
                         <img src="<%= post.author.avatarImgUrl ? post.author.avatarImgUrl : "/images/defaultAvatarGrey_2.png" %>">
                     </div>
-                    <div class="mx-auto mt-2">
+                    <div class="forum-userbadge-author mx-auto mt-2">
                         <a href="/users/<%=  post.author.id %>"><%= post.author.username %></a>    
                     </div>
-                    <div class="mx-auto">
+                    <div class="forum-userbadge-admin mx-auto mb-2">
                         <% if (post.author.isAdmin) {%>
-                        <p class="text-muted mt-0 mb-0">Site admin</p>
+                        <p class="mt-0 mb-0">Site admin</p>
                         <% } %>
                     </div>
-                    <div class="mx-auto">
-                        <p class="text-muted mt-0 mb-0">Posts: 20</p>
+                    <div class="forum-userbadge-numposts mx-auto mt-2">
+                        <p class="mt-0 mb-0">Posts: 20</p>
                     </div>
-                    <div class="mx-auto">
-                        <p class="text-muted mt-2">Joined: 12/03/2018</p>
+                    <div class="mx-auto forum-userbadge-joindate">
+                        <p class="mt-1">Joined: 12/03/2018</p>
                     </div>
                 </div>
                 <div class="flex-column col-10 p-3 text-justify post-container">
@@ -73,14 +80,14 @@
                     <p class="text-justify"><%= post.text %></p>
                     <% if (currentUser &&  currentUser._id.equals(post.author.id) || currentUser && currentUser.isAdmin) { %>
                     <div>
-                        <a class="btn btn-sm btn-warning mr-2 mb-2 float-left" role="button" data-toggle="collapse" href="#collapseEditPost<%= post._id %>" aria-expended="false" aria-controls="collapse<%= post._id %>">Edit</a>
+                        <a class="editpost-btn btn btn-sm mb-2 ml-2 float-left" role="button" data-toggle="collapse" href="#collapseEditPost<%= post._id %>" aria-expended="false" aria-controls="collapse<%= post._id %>">Edit</a>
                         <form action="/forumTopics/<%= forumTopic.id %>/forumPosts/<%= post._id %>?_method=DELETE" method="POST">
                             <input style="position: absolute; display: none; " name="postText" value="<%= post.text %>">
-                            <button class="btn btn-sm btn-danger mb-2">Delete</button>    
+                            <button class="btn btn-sm btn-danger ml-2 mb-2">Delete</button>    
                         </form>
                         <!--Collapsible edit post form -->
-                        <div class="collapse" id="collapseEditPost<%= post._id %>"> 
-                            <div class="card  bg-light edit-post-form">
+                        <div class="collapse mt-2" id="collapseEditPost<%= post._id %>"> 
+                            <div class="card bg-light edit-post-form">
                                 <div class="card-body">
                                     <h4 class="card-title">Edit your post <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
                                     <form id="edit-post-form<%= post._id %>" action="/forumTopics/<%= forumTopic._id %>/forumPosts/<%= post._id %>?_method=PUT" method="POST">
@@ -91,7 +98,7 @@
                                             <textarea class="form-control card-text" name="post[text]" form="edit-post-form<%= post._id %>" rows="10" cols="100"><%= post.text %></textarea>
                                         </div>
                                         <div class="button-form-spacing form-group">
-                                            <button class="btn btn-warning btn-sm">Edit Post <span class="glyphicon glyphicon-comment" aria-hiden="true"></span></button>
+                                            <button class="btn btn-sm">Edit Post <span class="glyphicon glyphicon-comment" aria-hiden="true"></span></button>
                                         </div>
                                     </form>
                                 </div>
@@ -106,31 +113,31 @@
     </div>
     <!-- add new post form -->
     <div class="row">
-        <div class="d-flex flex-row bg-light border rounded col-12 mt-4 mb-4"> 
-            <div class="user-discussion-badge d-flex flex-column justify-content-center col-2 border-right  pr-1 pl-1">
+        <div class="newpost-input-form-avatar d-flex flex-row bg-light border col-12 mt-4 mb-4"> 
+            <div class="user-discussion-badge d-flex flex-column justify-content-center col-2 pr-1 pl-1">
                 <div class="user-discussion-avatarimg mt-2">
                     <img src="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.avatarImg.url : "/images/defaultAvatarGrey_2.png" %>">    
                 </div>
-                <div class="mx-auto mt-2">
+                <div class="forum-userbadge-author mx-auto mt-2">
                     <a href="<%= typeof currentUser !== 'undefined' && currentUser ? "/users/" + currentUser._id : "#" %>"><%= typeof currentUser !== 'undefined' && currentUser ? currentUser.username : "Guest" %></a>
                 </div>
                 <div class="mx-auto">
                     <% if (typeof currentUser !== 'undefined' && currentUser.isAdmin) {%>
-                    <p class="text-muted mt-0 mb-0">Site admin</p>
+                    <p class="forum-userbadge-admin mt-0 mb-0">Site admin</p>
                     <% } %>
                 </div>
                 <div class="mx-auto">
-                    <p class="text-muted mt-0 mb-2"><%= typeof currentUser !== 'undefined' && currentUser ? "Posts: 20" : "" %></p>
+                    <p class="forum-userbadge-numposts mt-0 mb-2"><%= typeof currentUser !== 'undefined' && currentUser ? "Posts: 20" : "" %></p>
                 </div>
                 <div class="mx-auto">
-                    <p class="text-muted mt-0"><%= typeof currentUser !== 'undefined' && currentUser ? "Joined: 23/3/2015" : "" %></p>
+                    <p class="forum-userbadge-joindate mt-0"><%= typeof currentUser !== 'undefined' && currentUser ? "Joined: 23/3/2015" : "" %></p>
                 </div>
             </div>
-            <div class="d-flex flex-column col-10 pl-4 pr-3 pt-2 text-justify">
+            <div class="d-flex flex-column newpost-input-form col-10 pl-3 pr-3 pt-2 text-justify">
                 <form action="/forumTopics/<%= forumTopic.id %>/forumPosts" method="POST">
                     <div class="form-group">
-                    <p class="text-muted mt-0 mb-1">Post a Reply</p>
-                    <textarea class="form-control forum-newpost-text w-100 p-2" name="newPost[text]" placeholder="Type your message here"></textarea> 
+                        <p class="mt-0 mb-1">Post a Reply</p>
+                        <textarea class="form-control forum-newpost-text w-100 p-2" name="newPost[text]" placeholder="Type your message here"></textarea> 
                     </div>
                     <div class="form-group d-flex justify-content-end">
                         <button class="btn btn-info btn-sm mb-2">Post</button>
