@@ -798,7 +798,7 @@ div.flex-column>div>a.editpost-btn:hover {
 .edit-post-form>.card-body button:hover {
     background-color: #3C8C95;
 } 
-div.newpost-input-form-avatar.d-flex.flex-row.bg-light.border.col-12.mt-4.mb-4 {
+div.newpost-input-form.d-flex.flex-row.bg-light.border.col-12 {
     padding-left: 0px;
     padding-right: 0px;
 }

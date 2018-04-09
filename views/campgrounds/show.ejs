@@ -128,7 +128,7 @@
                                     <strong>Email:</strong> <a href="mailto:<%= campground.contact.email %>"><%= campground.contact.email %></a> <br />
                                 <% } if (campground.contact.website) { %>
                                     <strong>Website: </strong><a href="<%= campground.contact.website %>"><%= campground.contact.website %></a>
-                                <% } if (campground.contact.email == undefined && campground.contact.phone == undefined && campground.contact.website == undefined) { %>
+                                <% } if ((campground.contact.email === '' && campground.contact.phone === '' && campground.contact.website === '') || (campground.contact.email == undefined && campground.contact.phone == undefined && campground.contact.website == undefined)) { %>
                                     No booking info available at this time.
                                 <% } %>
                             </div> 

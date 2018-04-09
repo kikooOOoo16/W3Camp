@@ -159,6 +159,7 @@ router.get("/:id", function(req, res) {
                 var weatherBackground = weatherBackgroundDeterminator (data.currently.icon);
                 // generate week days for weather widget
                 var dailyWeather = weatherWeekDaysGenerator(data, dateString);
+                // eval(require("locus"))
             res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather});
             });
         }
@@ -173,7 +174,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) 
 });
 
 // UPDATE CAMPGROUND
-router.put("/:id", middleware.checkCampgroundOwnership, upload.single("image"), function(req, res){
+router.put("/:id", middleware.checkCampgroundOwnership, upload.single("image"), function(req, res) {
     // find and update the correct campground
     geocoder.geocode(req.body.location, function (err, data) {
         if (err || !data.length) {

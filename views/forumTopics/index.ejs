@@ -17,9 +17,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <!--<a href="/forumTopics/new" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-pencil-alt"></i> New topic</a>-->
-            <!--<a href="/contact" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Request category</a>-->
-            <!--<a href="/campgrounds" class="btn btn-secondary btn-sm mb-3"><i class="far fa-arrow-alt-circle-left"></i> Back</a>-->
             <div class="table-responsive mb-4">
                 <table class="table table-hover">
                     <thead class="thead-forum">
@@ -96,7 +93,6 @@
                                 <td>There are no topics for this category yet.</td>
                             </tr>
                         <% } else if (counter) { counter = true }%>
-                        <%  /*console.log(JSON.stringify("Counter " + counter, null, '\t'))*/ %>
                     </tbody>
                 </table>
             </div>
@@ -136,7 +132,6 @@
                                 <td>There are no topics for this category yet.</td>
                             </tr>
                         <% } else if (counter) { counter = true }%>
-                        <%  /*console.log(JSON.stringify("Counter " + counter, null, '\t'))*/ %>
                     </tbody>
                 </table>
             </div>
@@ -150,15 +145,15 @@
                 </thead>
                 <tbody>
                     <% if (latestPosts && latestPosts.posts.length > 0) { %>
-                        <% latestPosts.posts.forEach(function (post) { %>
+                        <% for (var i = latestPosts.posts.length - 1; i >= 0; i--) { %>
                             <tr>
                                 <td class="d-flex flex-column">
-                                    <div class="latest_p_topic"><a href="/forumTopics/<%= post.postTopicId %>"><%= post.postTopic.substring(0,37) %></a>...</div>
-                                    <div class="latest_p_author text-muted m-0">By <a href="/users/<%= post.author.id %>"><%= post.author.username.substring(0,30) %></a></div>
-                                    <div class="latest_p_text"><%= post.text.substring(0,60) %>...</div>
+                                    <div class="latest_p_topic"><a href="/forumTopics/<%= latestPosts.posts[i].postTopicId %>"><%= latestPosts.posts[i].postTopic.substring(0,37) %></a>...</div>
+                                    <div class="latest_p_author text-muted m-0">By <a href="/users/<%= latestPosts.posts[i].author.id %>"><%= latestPosts.posts[i].author.username.substring(0,30) %></a></div>
+                                    <div class="latest_p_text"><%= latestPosts.posts[i].text.substring(0,60) %>...</div>
                                 </td>
                             </tr>
-                        <% }); %>
+                        <% } %>
                     <% } else { %>
                             <tr>
                                 <td class="text-muted">No posts yet.</td>

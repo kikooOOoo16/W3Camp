@@ -3,6 +3,7 @@ var express     = require("express"),
     ForumPost   = require("../models/forumPost"),
     ForumTopic  = require("../models/forumTopic"),
     LatestPosts = require("../models/latestPosts"),
+    User        = require("../models/user"),
     middleware  = require("../middleware/index.js");
 
 // CREATE POST
@@ -19,41 +20,58 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                 req.flash("error", "There was an error while creating your new post.");
                 return res.redirect("/forumTopics/" + req.params.id);
             }
-            // GENERATE NEW POST DATA AND SAVE THE NEW POST TO THE FORUM TOPIC
-            newPost.author.id = req.user._id;
-            newPost.author.username = req.user.username;
-            newPost.author.avatarImgUrl = req.user.avatarImg.url;
-            newPost.author.isAdmin = req.user.isAdmin;
-            newPost.save();
-            foundForumTopic.posts.push(newPost);
-            foundForumTopic.save();
-            // PUSH NEW POST TO LATEST POSTS ARRAY 
-            var latestPost = {
-                postTopicId: foundForumTopic.id,
-                postTopic: foundForumTopic.name,
-                text: newPost.text,
-                createdAt: newPost.createdAt,
-                author: newPost.author
-            }
-            LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function(err, latestPostsArray) {
+            User.findByIdAndUpdate(req.user._id, { $set: { postsCount: req.user.postsCount + 1}}, function(err, updatedUser) {
                 if (err) {
-                    req.flash("error", "There was an error with the latest posts functionality.");
-                    return res.redirect("/campgrounds");
+                    req.flash("error", "There was a problem while updating the user posts counter.");
+                    return res.redirect("/forumTopics/" + req.params.id);
                 }
-                // DELETE OLDEST POST IF THERE ARE 5 POSTS IN THE RECENT POSTS ARRAY
-                if (latestPostsArray.posts.length >= 5) {
-                    LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {_id : latestPostsArray.posts[0]._id } } }, function (err, updatedLatestPostsArray) {
+                // GENERATE NEW POST DATA AND SAVE THE NEW POST TO THE FORUM TOPIC
+                newPost.author.id = req.user._id;
+                newPost.author.username = req.user.username;
+                newPost.author.avatarImgUrl = req.user.avatarImg.url;
+                newPost.author.isAdmin = req.user.isAdmin;
+                newPost.author.postsCount = updatedUser.postsCount + 1;
+                newPost.forumTopic = foundForumTopic.topic;
+                newPost.save();
+                foundForumTopic.posts.push(newPost);
+                foundForumTopic.save();
+                // UPDATE POSTSCOUNT TO ALL POSTS FROM THE USER
+                ForumPost.update({'author.id' : req.user._id}, { $set: {'author.postsCount': updatedUser.postsCount + 1} }, {upsert: true, multi: true }, function (err, updatePostsRes) {
+                    if (err) {
+                        req.flash("error", "There was an error while updating the posts count value of all your posts.");
+                        console.log(err);
+                        return res.redirect("/campgrounds");
+                    }
+                    // PUSH NEW POST TO LATEST POSTS ARRAY 
+                    var latestPost = {
+                        postTopicId: foundForumTopic.id,
+                        postTopic: foundForumTopic.name,
+                        text: newPost.text,
+                        createdAt: newPost.createdAt,
+                        author: newPost.author
+                    }
+                    LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function(err, latestPostsArray) {
                         if (err) {
-                            req.flash("error", "There was an error while updating the latest posts array.");
-                            return res.redirect("/forumTopics/" + req.params.id);
+                            req.flash("error", "There was an error with the latest posts functionality.");
+                            return res.redirect("/campgrounds");
                         }
+                        // DELETE OLDEST POST IF THERE ARE 5 POSTS IN THE RECENT POSTS ARRAY
+                        if (latestPostsArray.posts.length >= 5) {
+                            LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {_id : latestPostsArray.posts[0]._id } } }, function (err, updatedLatestPostsArray) {
+                                if (err) {
+                                    req.flash("error", "There was an error while updating the latest posts array.");
+                                    return res.redirect("/forumTopics/" + req.params.id);
+                                }
+                            });
+                        }
+                        // ADD NEW POST TO THE RECENT POSTS ARRAY
+                        latestPostsArray.posts.push(latestPost);
+                        latestPostsArray.save();
+                        // ADD PLUS ONE TO THE POST COUNTER OF THE USER
+                        req.flash("success", "Added your new post successfully.");
+                        res.redirect("/forumTopics/" + req.params.id);
                     });
-                }
-                // ADD NEW POST TO THE RECENT POSTS ARRAY
-                latestPostsArray.posts.push(latestPost);
-                latestPostsArray.save();
-                req.flash("success", "Added your new post successfully.");
-                res.redirect("/forumTopics/" + req.params.id);
+                });
             });
         });
     });
@@ -73,7 +91,7 @@ router.put("/:post_id", middleware.checkForumPostOwnership, function (req, res) 
 
 // DELETE post
 router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, res) {
-    ForumPost.findByIdAndRemove(req.params.post_id, function (err) {
+    ForumPost.findByIdAndRemove(req.params.post_id, function (err, postToDelete) {
         if (err) {
             req.flash("error", "There was an error deleting your post.");
             return res.redirect("/forumTopics/" + req.params.id);
@@ -93,8 +111,15 @@ router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, re
                     });
                 }
             }
-            req.flash("success", "Post successfully deleted.");
-            res.redirect("/forumTopics/" + req.params.id);
+            // eval(require("locus"))
+            User.findByIdAndUpdate(postToDelete.author.id, { $set: { postsCount: req.user.postsCount - 1}}, function(err, updatedUser) {
+                if (err) {
+                    req.flash("error", "There was a problem while updating the user posts counter.");
+                    return res.redirect("/forumTopics/" + req.params.id);
+                }
+                req.flash("success", "Post successfully deleted.");
+                res.redirect("/forumTopics/" + req.params.id);
+            });
         });
     });
 });

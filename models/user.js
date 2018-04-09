@@ -14,7 +14,8 @@ var userSchema = new mongoose.Schema({
         url: String,
         publicId: String
         },
-    isAdmin: {type: "Boolean", default: false}
+    isAdmin: {type: "Boolean", default: false},
+    postsCount : {type: Number, default: 0}
 });
 
 userSchema.plugin(passportLocalMongoose);

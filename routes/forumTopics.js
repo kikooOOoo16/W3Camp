@@ -2,6 +2,7 @@ var express         = require("express"),
     router          = express.Router(),
     middleware      = require("../middleware/index.js"),
     ForumTopic      = require("../models/forumTopic"),
+    ForumPost       = require("../models/forumPost"),
     User            = require("../models/user"),
     LatestPosts     = require("../models/latestPosts");
     
@@ -89,12 +90,19 @@ module.exports = router;
 
 // DESTROY - delete forum topic
 router.delete("/:id", middleware.checkForumTopicOwnership, function(req, res){
-    ForumTopic.findByIdAndRemove(req.params.id, function(err){
+    ForumTopic.findByIdAndRemove(req.params.id, function(err, forumTopicToDelete){
        if (err) {
            req.flash("error", "There was an error delete your discussion topic.");
            return res.redirect("/forumTopcis/" + req.params.id);
        } 
-       req.flash("success", "Successfully deleted.");
-       res.redirect("/forumTopics");
+       ForumPost.remove({forumTopic: forumTopicToDelete.topic}, function (err) {
+           if (err) {
+               req.flash("error", "There was an error while deleting the posts related to this topic.");
+               return res.redirect("/forumTopcis/" + req.params.id);
+           }
+           //   Character.remove({ name: 'Eddard Stark' }, function (err) {});
+           req.flash("success", "Successfully deleted.");
+           res.redirect("/forumTopics");
+       });
     });
 });
