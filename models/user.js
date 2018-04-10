@@ -15,7 +15,8 @@ var userSchema = new mongoose.Schema({
         publicId: String
         },
     isAdmin: {type: "Boolean", default: false},
-    postsCount : {type: Number, default: 0}
+    postsCount: {type: Number, default: 0},
+    createdAt: {type: Date, default: Date.now()}
 });
 
 userSchema.plugin(passportLocalMongoose);

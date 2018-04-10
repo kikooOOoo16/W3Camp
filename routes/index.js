@@ -130,7 +130,7 @@ router.get("/logout", function(req, res) {
     res.redirect("/campgrounds");
 });
 
-// USER PROFILE ROUTE
+// SHOW USER PROFILE ROUTE
 router.get("/users/:id", function(req, res) {
    User.findById(req.params.id, function (err, foundUser) {
        var currentPage = "";

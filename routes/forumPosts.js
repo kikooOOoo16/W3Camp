@@ -4,7 +4,8 @@ var express     = require("express"),
     ForumTopic  = require("../models/forumTopic"),
     LatestPosts = require("../models/latestPosts"),
     User        = require("../models/user"),
-    middleware  = require("../middleware/index.js");
+    middleware  = require("../middleware/index.js"),
+    moment      = require("moment");
 
 // CREATE POST
 router.post("/", middleware.isLoggedIn, function (req, res) {
@@ -31,6 +32,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                 newPost.author.avatarImgUrl = req.user.avatarImg.url;
                 newPost.author.isAdmin = req.user.isAdmin;
                 newPost.author.postsCount = updatedUser.postsCount + 1;
+                newPost.author.createdAt = moment(updatedUser.createdAt, "MMM-DD-YYYY");
                 newPost.forumTopic = foundForumTopic.topic;
                 newPost.save();
                 foundForumTopic.posts.push(newPost);
@@ -96,11 +98,13 @@ router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, re
             req.flash("error", "There was an error deleting your post.");
             return res.redirect("/forumTopics/" + req.params.id);
         }
+        // GET THE LATEST POSTS ARRAY
         LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function(err, latestPostsArray) {
             if (err) {
                 req.flash("error", "There was an error with the latest posts functionality.");
                 return res.redirect("/campgrounds");
             }
+            // CHECK IF THE POST THAT WE WANT TO DELETE IS IN THE LATEST POSTS ARRAY
             for (var i = 0; i < latestPostsArray.posts.length; i++) {
                 if (req.body.postText === latestPostsArray.posts[i].text) {
                     LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {_id : latestPostsArray.posts[i]._id } } }, function (err, updatedLatestPostsArray) {
@@ -111,14 +115,22 @@ router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, re
                     });
                 }
             }
-            // eval(require("locus"))
+            // REDUCE THE POSTS COUNTER OF THE USER WHOSE POST GOT DELETED 
             User.findByIdAndUpdate(postToDelete.author.id, { $set: { postsCount: req.user.postsCount - 1}}, function(err, updatedUser) {
                 if (err) {
                     req.flash("error", "There was a problem while updating the user posts counter.");
                     return res.redirect("/forumTopics/" + req.params.id);
                 }
+                // REDUCE THE POSTS COUNTER ON ALL THE POSTS THAT BELONG TO THIS USER
+                ForumPost.update({'author.id' : postToDelete.author.id}, { $set: {'author.postsCount': updatedUser.postsCount - 1} }, {upsert: true, multi: true }, function (err, updatePostsRes) {
+                    if (err) {
+                        req.flash("error", "There was an error while updating the posts count value of all your posts.");
+                        console.log(err);
+                        return res.redirect("/campgrounds");
+                    }
                 req.flash("success", "Post successfully deleted.");
                 res.redirect("/forumTopics/" + req.params.id);
+                });
             });
         });
     });

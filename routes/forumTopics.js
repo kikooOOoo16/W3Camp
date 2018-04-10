@@ -4,7 +4,8 @@ var express         = require("express"),
     ForumTopic      = require("../models/forumTopic"),
     ForumPost       = require("../models/forumPost"),
     User            = require("../models/user"),
-    LatestPosts     = require("../models/latestPosts");
+    LatestPosts     = require("../models/latestPosts"),
+    moment          = require("moment");
     
     
 // INDEX - show all forum topics

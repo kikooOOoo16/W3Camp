@@ -12,7 +12,8 @@ var forumPostSchema = new mongoose.Schema({
         username: String,
         avatarImgUrl: String,
         isAdmin: {type: "Boolean", default: false},
-        postsCount: Number
+        postsCount: Number,
+        createdAt: Date
     },
 });
 
