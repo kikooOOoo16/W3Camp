@@ -33,7 +33,8 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                 newPost.author.isAdmin = req.user.isAdmin;
                 newPost.author.postsCount = updatedUser.postsCount + 1;
                 newPost.author.createdAt = moment(updatedUser.createdAt, "MMM-DD-YYYY");
-                newPost.forumTopic = foundForumTopic.topic;
+                newPost.forumTopic = foundForumTopic.name;
+                newPost.forumTopicId = foundForumTopic.id;
                 newPost.save();
                 foundForumTopic.posts.push(newPost);
                 foundForumTopic.save();
@@ -122,12 +123,13 @@ router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, re
                     return res.redirect("/forumTopics/" + req.params.id);
                 }
                 // REDUCE THE POSTS COUNTER ON ALL THE POSTS THAT BELONG TO THIS USER
-                ForumPost.update({'author.id' : postToDelete.author.id}, { $set: {'author.postsCount': updatedUser.postsCount - 1} }, {upsert: true, multi: true }, function (err, updatePostsRes) {
+                ForumPost.update({'$and': [{'author.id' : postToDelete.author.id}, {_id: {'$ne': req.params.post_id} }]}, { $set: {'author.postsCount': updatedUser.postsCount - 1} }, {multi: true }, function (err, updatePostsRes) {
                     if (err) {
                         req.flash("error", "There was an error while updating the posts count value of all your posts.");
                         console.log(err);
                         return res.redirect("/campgrounds");
                     }
+                // eval(require("locus"))
                 req.flash("success", "Post successfully deleted.");
                 res.redirect("/forumTopics/" + req.params.id);
                 });

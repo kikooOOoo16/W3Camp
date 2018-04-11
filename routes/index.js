@@ -2,6 +2,7 @@ var express         = require("express"),
     router          = express.Router(),
     User            = require("../models/user"),
     Campground      = require("../models/campground"),
+    ForumPost       = require("../models/forumPost"),
     middleware      = require("../middleware/index.js"),
     passport        = require("passport"),
     async           = require("async"),
@@ -71,6 +72,9 @@ router.post("/register", function(req, res) {
         req.body.user.avatarImg = {
             url : "/images/defaultAvatarGrey_2.png"
         }; 
+        req.body.user.coverImg = {
+            url : "/images/backgrounds/user-default-cover.jpg"
+        }; 
         if (req.body.adminPass === process.env.ADMIN_PASS){
             req.body.user.isAdmin = true;
         }
@@ -122,7 +126,6 @@ router.post("/login", function(req, res, next) {
     })(req, res, next);
 });
 
-
 // LOGOUT LOGIC
 router.get("/logout", function(req, res) {
     req.logout();
@@ -132,26 +135,29 @@ router.get("/logout", function(req, res) {
 
 // SHOW USER PROFILE ROUTE
 router.get("/users/:id", function(req, res) {
-   User.findById(req.params.id, function (err, foundUser) {
-       var currentPage = "";
-       if (err) {
+    User.findById(req.params.id, function (err, foundUser) {
+        var currentPage = "";
+        if (err) {
            req.flash("error", "User not found!");
-           res.redirect("back");
-       } else {
-            if (req.user && foundUser.id === req.user.id) {
-                currentPage = "userPage";
-            }
-            Campground.find().where("author.id").equals(foundUser._id).exec(function (err, usersCampgrounds) {
-               if (err) {
-                   req.flash("error", "User not found!");
-                   res.redirect("back");
-               } else {
-                //   eval(require('locus'));
-                   res.render("users/show", {user: foundUser, campgrounds: usersCampgrounds, page: currentPage});                  
-               }
+           return res.redirect("back");
+        }
+        if (req.user && foundUser.id === req.user.id) {
+            currentPage = "userPage";
+        }
+        Campground.find().where("author.id").equals(foundUser._id).exec(function (err, usersCampgrounds) {
+           if (err) {
+               req.flash("error", "User not found!");
+               return res.redirect("back");
+           } 
+            ForumPost.find({'author.id' : foundUser._id}, function (err, foundUserPosts) {
+                if (err) {
+                    req.flash("error", "User not found!");
+                    return res.redirect("back");
+                } 
+                res.render("users/show", {user: foundUser, campgrounds: usersCampgrounds, page: currentPage, userPosts: foundUserPosts});
             });
-       }
-   });  
+        });
+    });  
 });
 
 // EDIT USER PROFILE ROUTE
@@ -167,7 +173,6 @@ router.get("/users/:id/edit", middleware.checkProfileOwnership, function(req, re
 
 // UPDATE USER PROFILE ROUTE 
 router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"), function (req, res) {
-    // eval(require('locus'));
     if (req.body.adminPass === process.env.ADMIN_PASS){
     req.body.user.isAdmin = true;
     }

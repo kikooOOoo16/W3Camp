@@ -14,6 +14,10 @@ var userSchema = new mongoose.Schema({
         url: String,
         publicId: String
         },
+    coverImg: {
+        url: String,
+        publicId: String
+        },
     isAdmin: {type: "Boolean", default: false},
     postsCount: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now()}

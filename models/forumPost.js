@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 
 var forumPostSchema = new mongoose.Schema({
     forumTopic: String,
+    forumTopicId: String,
     text: String,
     createdAt: {type: Date, default: Date.now()},
     author: {

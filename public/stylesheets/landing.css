@@ -1,6 +1,5 @@
 body {
     background-color: #000;
-    /*background: url(https://images.unsplash.com/photo-1445308394109-4ec2920981b1?dpr=2&fit=crop&fm=jpg&h=825&ixlib=rb-0.3.5&q=50&w=1450);*/
     background-size: cover;
     background-position: center; 
     transition: background 1.5s linear;
@@ -75,36 +74,40 @@ hr {
 .btn-change{
     display: inline-block;
     vertical-align: middle;
-    box-shadow: 0 0 1px transparent;
-    overflow: hidden;
-    color: #ffffff;
-    font-size: 17pt;
-    outline: none;
-    border: 0px;
-    border-radius: 10px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 0px;
+    letter-spacing: 1px;
+    font-size: 14pt;
+    font-weight: 500;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    border: 3px solid #fff;
+    padding: .7em 2em;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
     -webkit-transition-property: transform, color, background-color;
     transition-property: transform, color, background-color;
 }
 .btn-change:hover, btn-change:focus{
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
     -webkit-animation-name: btn-change;
     animation-name: btn-change;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
+    -webkit-animation-duration: 1.8s;
+    animation-duration: 1.8s;
     -webkit-animation-delay: 0.5s;
     animation-delay: 0.5s;
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-    background-color: #5B9C54;
-    background-color: #5B9c54;
-    color: white;
+    background-color: #ffffff;
+    color: #313131;
 }
 @keyframes imageAnimation { 
   0% { 
@@ -134,7 +137,8 @@ hr {
     font-size: 40pt;
   }
   .btn-change {
-    font-size: 40pt;
-    padding: 20px;
+    margin-top: 50px;
+    font-size: 34pt;
+    padding: .7em 2em;
   }
 }
