@@ -280,9 +280,7 @@ body {
 }
 .img-resize {
     height: 175px !important;
-}
-.pagination {
-    
+    object-fit: cover;
 }
 
 
@@ -309,7 +307,8 @@ body {
     background-color: #697179;
     color: #ffffff;
 }
-.card img{
+.campground-show-image{
+    object-fit: cover;
     border-radius: 3px;
     width: 100%;
 }
