@@ -1,3 +1,5 @@
+/*global $*/
+/*global location*/ 
 $('#campground-search').on('input', function(){
     var search = $(this).serialize();
     if (search === "search="){

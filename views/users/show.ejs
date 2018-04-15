@@ -1,7 +1,31 @@
 <% include ../partials/header %>
 
 <div class="container profile-container">
-    <header class="profile-coverimg"></header>
+    <div class="coverimg-wrap d-flex justify-content-center">
+        <img class="profile-coverimg" src="<%= user.coverImg.url %>" alt="/images/backgrounds/user-default-cover.jpg"/>
+        <% if (currentUser && user.id === currentUser.id || currentUser && currentUser.isAdmin) { %>
+            <div class="overlay"></div>
+            <button id="coverimgBtn" class="coverimg-buton"><a href="#" data-rel="popup"><i class="fa fa-camera mr-2" aria-hidden="true"></i>Edit cover</a></button>
+            <!-- modal form -->
+            <div id="modal-form-coverimg" class="modal">
+                <!-- modal form content -->
+                <div class="modalform-content">
+                    <span class="modalform-closeBtn"><i class="far fa-times-circle"></i></span>
+                    <form form action="/users/<%= user.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="coverImage">Select Image</label>
+                            <input type="file" id="coverImage" name="image" accept="image/*">
+                        </div>
+                        <div class="d-flex flex-row justify-content-center col-lg-12 mx-auto">
+                            <button class="w-30 btn btn-info hvr-grow">Edit</button>
+                        </div>
+                        <input style="position: absolute; display: none; " name="oldCoverImagePublicId" value="<%= user.coverImg.publicId %>">
+                        <input style="position: absolute; display: none; " name="coverImageBool" value="true">
+                    </form>
+                </div>
+            </div>
+        <% } %>
+    </div>
     <div class="row">
         <div class="left d-flex flex-column col-md-12 col-lg-4">
             <div class="photo-left">
@@ -71,7 +95,7 @@
                                                 <td>
                                                    <a href="/forum/<%= post.forumTopicId %>"><%= post.forumTopic.substring(0,25)%>...</a>
                                                 </td>
-                                                <td><%= post.text.substring(0,25) %></td>
+                                                <td><%= post.text.substring(0,25) %>...</td>
                                                 <td><%= moment(post.createdAt).fromNow() %></td>
                                             </tr>
                                             <% } %>
@@ -170,7 +194,6 @@
                             </div>
                         </div>
                         <input style="position: absolute; display: none; " name="oldAvatarImagePublicId" value="<%= user.avatarImg.publicId %>">
-                        <!--<input style="position: absolute; display: none; " name="oldCoverImagePublicId" value="<%= user.coverImg.publicId %>">-->
                     </form>
                 </div>
             </div>

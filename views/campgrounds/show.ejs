@@ -112,14 +112,14 @@
                 </thead>
                 <tbody class="table-body">                                    
                     <tr>
-                        <td>
-                           <a href="https://en.wikipedia.org/w/index.php?search=<%= campground.name %>&title=Special:Search&profile=default&fulltext=1&searchToken=6uq3pmai7yxfv06ym49np4svh">About</a>
+                        <td id="campgroundMoreInfo-aboutTd">
+                           <a id="campgroundMoreInfo-aboutBtn" href="https://en.wikipedia.org/w/index.php?search=<%= campground.name %>&title=Special:Search&profile=default&fulltext=1&searchToken=6uq3pmai7yxfv06ym49np4svh">About</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <a class="card-link" role="button" data-toggle="collapse" href="#bookInfo" aria-expended="false" aria-controls="bookInfo">
-                                <!--<i class="fas fa-plus aria-hidden=true mr-2"></i>-->Book now
+                               Book now
                             </a>
                             <div class="collapse text-left" id="bookInfo">
                                 <% if (campground.contact.phone) { %>

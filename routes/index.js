@@ -177,29 +177,62 @@ router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"
     req.body.user.isAdmin = true;
     }
     if (req.file) {
-        // delete old avatar image
-        cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(error, result) {
-            if (error) {
-                console.log(error);
-            }
-            console.log(result); 
-        });
-        // upload new avatar image
-        cloudinary.uploader.upload(req.file.path, function(result){
-            req.body.user.avatarImg = {
-                publicId: result.public_id,
-                url: result.secure_url
-            }
-            User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
-               if (err || !user) {
-                    req.flash("error", err.message);
-                    res.redirect("back");
-               } else {
-                    req.flash("success", "Profile info successfully updated!");
-                    res.redirect("/users/" + user.id);   
-               }
+        // check if updating cover image
+        if (req.body.coverImageBool === "true") {
+            if (req.body.oldCoverImagePublicId) { 
+                // delete old cover image
+                cloudinary.uploader.destroy(req.body.oldCoverImagePublicId, function(error, result) {
+                    if (error && !error.result === "ok") {
+                        console.log("Cloudinart cover image delete error : " + error);
+                        req.flash("error", "There was a problem deleting your old cover image.");
+                        res.redirect("/users/" + req.params.id);
+                        // eval(require("locus"))
+                    }
+                    // console.log(result); 
+                });
+            } 
+            // upload new cover image
+            cloudinary.uploader.upload(req.file.path, function(result){
+                var newCoverImg = {
+                    publicId: result.public_id,
+                    url: result.secure_url
+                }
+                User.findByIdAndUpdate(req.params.id, {$set: {coverImg : newCoverImg}}, function (err, user){
+                   if (err || !user) {
+                        req.flash("error", err.message);
+                        res.redirect("back");
+                   } else {
+                        req.flash("success", "Profile info successfully updated!");
+                        res.redirect("/users/" + req.params.id);   
+                   }
+                });
             });
-        });
+        } else {
+            // update avatar image
+            // delete old avatar image
+            cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(error, result) {
+                if (error) {
+                    console.log(error);
+                }
+                console.log(result); 
+            });
+            // upload new avatar image
+            cloudinary.uploader.upload(req.file.path, function(result){
+                req.body.user.avatarImg = {
+                    publicId: result.public_id,
+                    url: result.secure_url
+                }
+                User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
+                   if (err || !user) {
+                        req.flash("error", err.message);
+                        res.redirect("back");
+                   } else {
+                        req.flash("success", "Profile info successfully updated!");
+                        res.redirect("/users/" + user.id);   
+                   }
+                });
+            });
+        }
     } else {
         User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
            if (err || !user) {
