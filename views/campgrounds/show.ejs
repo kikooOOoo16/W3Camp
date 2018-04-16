@@ -111,14 +111,14 @@
                     </tr>
                 </thead>
                 <tbody class="table-body">                                    
-                    <tr>
-                        <td id="campgroundMoreInfo-aboutTd">
+                    <tr id="campgroundMoreInfo-aboutTr">
+                        <td>
                            <a id="campgroundMoreInfo-aboutBtn" href="https://en.wikipedia.org/w/index.php?search=<%= campground.name %>&title=Special:Search&profile=default&fulltext=1&searchToken=6uq3pmai7yxfv06ym49np4svh">About</a>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="campgroundMoreInfo-bookTr">
                         <td>
-                            <a class="card-link" role="button" data-toggle="collapse" href="#bookInfo" aria-expended="false" aria-controls="bookInfo">
+                            <a id="campgroundMoreInfo-bookBtn" class="card-link" role="button" data-toggle="collapse" href="#bookInfo" aria-expended="false" aria-controls="bookInfo">
                                Book now
                             </a>
                             <div class="collapse text-left" id="bookInfo">

@@ -285,29 +285,32 @@ body {
 
 
     /*________CAMPGROUNDS SHOW.EJS STYLES________*/
-.table-info{
+.table-info {
     font-family: 'Josefin Sans', sans-serif;
 }
-#bookInfo{
+#bookInfo {
     color: #4F4F54;   
     font-size: 12pt;
 }
-.table-body>tr>td{
+.table-body>tr>td {
     background-color: #B8BDC0;
 }
-.table-body>tr>td:hover{
+.table-body>tr>td:hover {
     background-color: #C5C8CB;
 }
-.table-body>tr>td>a{
+.table-body>tr>td>a {
     color: #4F4F54;
     font-size: 15pt;
 }
-.table-head{
+.table-head {
     font-size: 20pt;
     background-color: #697179;
     color: #ffffff;
 }
-.campground-show-image{
+.table-body>tr {
+    cursor: pointer;
+}
+.campground-show-image {
     object-fit: cover;
     border-radius: 3px;
     width: 100%;

@@ -93,7 +93,7 @@
                                            <% if (post.text) { %>
                                             <tr>
                                                 <td>
-                                                   <a href="/forum/<%= post.forumTopicId %>"><%= post.forumTopic.substring(0,25)%>...</a>
+                                                   <a href="/forumTopics/<%= post.forumTopicId %>"><%= post.forumTopic.substring(0,25)%>...</a>
                                                 </td>
                                                 <td><%= post.text.substring(0,25) %>...</td>
                                                 <td><%= moment(post.createdAt).fromNow() %></td>

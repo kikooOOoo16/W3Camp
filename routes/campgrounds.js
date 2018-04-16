@@ -139,6 +139,7 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(req, re
 
 // SHOW - Shows info about one particular campground 
 router.get("/:id", function(req, res) {
+    var showPage = "showCampground";
     // find the campground with provided id
     Campground.findById(req.params.id).populate("comments").exec(function (err, foundCampground) {
         if (err || !foundCampground) {
@@ -160,7 +161,7 @@ router.get("/:id", function(req, res) {
                 // generate week days for weather widget
                 var dailyWeather = weatherWeekDaysGenerator(data, dateString);
                 // eval(require("locus"))
-            res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather});
+            res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather, page : showPage});
             });
         }
     });
