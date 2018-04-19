@@ -210,26 +210,34 @@ router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"
         } else {
             // update avatar image
             // delete old avatar image
-            cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(error, result) {
-                if (error) {
-                    console.log(error);
+            cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(result) {
+                if (result.result !== 'ok' && result.result !== undefined) {
+                    req.flash("error", "There was an error while deleting your old avatar image.");
+                    console.log("Deleting user avatar image problem : " + result.result);
+                    return res.redirect("/users/" + req.params.id);
                 }
-                console.log(result); 
-            });
+                // console.log(result); 
+            
             // upload new avatar image
-            cloudinary.uploader.upload(req.file.path, function(result){
-                req.body.user.avatarImg = {
-                    publicId: result.public_id,
-                    url: result.secure_url
-                }
-                User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
-                   if (err || !user) {
-                        req.flash("error", err.message);
-                        res.redirect("back");
-                   } else {
-                        req.flash("success", "Profile info successfully updated!");
-                        res.redirect("/users/" + user.id);   
-                   }
+                cloudinary.uploader.upload(req.file.path, function(result){
+                    req.body.user.avatarImg = {
+                        publicId: result.public_id,
+                        url: result.secure_url
+                    }
+                    User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
+                        if (err || !user) {
+                            req.flash("error", "There was an error while updating your new avatar image in the DB.");
+                            return res.redirect("/users/" + req.params.id);
+                        }
+                        ForumPost.update({'author.id' : user._id}, { $set: {'author.avatarImgUrl': result.secure_url} }, {multi: true }, function (err, updatePostsRes) {
+                            if (err) {
+                                req.flash("error", "There was an error while applying your new avatar image to your forum posts.");
+                                return res.redirect("/users/" + req.params.id);
+                            }
+                            req.flash("success", "Profile info successfully updated!");
+                            res.redirect("/users/" + req.params.id);   
+                        });
+                    });
                 });
             });
         }

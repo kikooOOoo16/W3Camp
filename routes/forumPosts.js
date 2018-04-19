@@ -39,7 +39,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                 foundForumTopic.posts.push(newPost);
                 foundForumTopic.save();
                 // UPDATE POSTSCOUNT TO ALL POSTS FROM THE USER
-                ForumPost.update({'author.id' : req.user._id}, { $set: {'author.postsCount': updatedUser.postsCount + 1} }, {upsert: true, multi: true }, function (err, updatePostsRes) {
+                ForumPost.update({'author.id' : req.user._id}, { $set: {'author.postsCount': updatedUser.postsCount + 1} }, {multi: true }, function (err, updatePostsRes) {
                     if (err) {
                         req.flash("error", "There was an error while updating the posts count value of all your posts.");
                         console.log(err);

@@ -17,7 +17,7 @@
                             <input type="file" id="coverImage" name="image" accept="image/*">
                         </div>
                         <div class="d-flex flex-row justify-content-center col-lg-12 mx-auto">
-                            <button class="w-30 btn btn-info hvr-grow">Edit</button>
+                            <button class="w-30 btn modalform-submitBtn hvr-grow">Edit</button>
                         </div>
                         <input style="position: absolute; display: none; " name="oldCoverImagePublicId" value="<%= user.coverImg.publicId %>">
                         <input style="position: absolute; display: none; " name="coverImageBool" value="true">
@@ -137,6 +137,9 @@
                 <div class="tab-pane" id="edit">
                     <form action="/users/<%= user.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                         <div class="row">
+                            <div class="col-12">
+                                <p class="mt-1 text-muted"><strong>Tip:</strong> In order to change your cover image on your smartphone or tablet first tap on the cover and then select the edit button that pops up.</p>
+                            </div>
                             <div class="col-md-6 offset-sm-2 offset-2 offset-md-0 col-8">
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
