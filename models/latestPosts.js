@@ -16,6 +16,8 @@ var latestPostsSchema = new mongoose.Schema ({
             }
         }
     ]
+}, {
+  usePushEach: true //fixes push all mongo error support
 });
 
 module.exports = mongoose.model("latestPosts", latestPostsSchema);

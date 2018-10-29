@@ -31,6 +31,8 @@ var campgroundSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ]
+}, {
+  usePushEach: true //fixes push all mongo error support
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);

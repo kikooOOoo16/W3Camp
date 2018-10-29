@@ -5,6 +5,7 @@ var forumPostSchema = new mongoose.Schema({
     forumTopicId: String,
     text: String,
     createdAt: {type: Date, default: Date.now()},
+    isLatest: Boolean,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

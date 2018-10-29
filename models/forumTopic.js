@@ -18,6 +18,8 @@ var forumTopicSchema = new mongoose.Schema ({
             ref: "ForumPost"
         }
     ]
+}, {
+  usePushEach: true //fixes push all mongo error support
 });
 
 module.exports = mongoose.model("forumTopic", forumTopicSchema);

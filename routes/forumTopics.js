@@ -5,7 +5,8 @@ var express         = require("express"),
     ForumPost       = require("../models/forumPost"),
     User            = require("../models/user"),
     LatestPosts     = require("../models/latestPosts"),
-    moment          = require("moment");
+    moment          = require("moment"),
+    async           = require("async");
     
     
 // INDEX - show all forum topics
@@ -92,18 +93,28 @@ module.exports = router;
 // DESTROY - delete forum topic
 router.delete("/:id", middleware.checkForumTopicOwnership, function(req, res){
     ForumTopic.findByIdAndRemove(req.params.id, function(err, forumTopicToDelete){
-       if (err) {
-           req.flash("error", "There was an error delete your discussion topic.");
-           return res.redirect("/forumTopcis/" + req.params.id);
-       } 
-       ForumPost.remove({forumTopic: forumTopicToDelete.topic}, function (err) {
-           if (err) {
-               req.flash("error", "There was an error while deleting the posts related to this topic.");
-               return res.redirect("/forumTopcis/" + req.params.id);
-           }
-           //   Character.remove({ name: 'Eddard Stark' }, function (err) {});
-           req.flash("success", "Successfully deleted.");
-           res.redirect("/forumTopics");
-       });
+        if (err) {
+           req.flash("error", "There was an error deleting your discussion topic.");
+           return res.redirect("/forumTopics/" + req.params.id);
+        } 
+        // REMOVE POSTS RELATED TO THIS TOPIC WHICH ARE WITH A TRUE VALUE FOR LatestPost AND UPDATE THE LATEST POSTS ARRAY
+        forumTopicToDelete.posts.forEach(function (postId) {
+            ForumPost.findOneAndRemove({'isLatest' : true, _id : postId}, function(err, foundRelatedLatestPost) {
+                if (err) {
+                    req.flash("error", "There was an error while deleting the posts related to this topic.");
+                    return res.redirect("/forumTopics/" + req.params.id);
+                }
+                if (foundRelatedLatestPost != null) {
+                    LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {postTopic : foundRelatedLatestPost.forumTopic } } }, { safe: true, upsert: true }, function (err) {
+                        if (err) {
+                            req.flash("error", "There was an error while updating the latest posts array.");
+                            return res.redirect("/forumTopics/" + req.params.id);
+                        }
+                    });
+                }
+            });
+        });
+        req.flash("success", "Successfully deleted.");
+        res.redirect("/forumTopics");
     });
 });

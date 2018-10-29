@@ -1,13 +1,13 @@
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    flash       = require("connect-flash"),
-    passport    = require("passport"),
-    localStrategy = require("passport-local"),
-    methodOverride = require("method-override"),
-    User        = require("./models/user"),
-    seedDB      = require("./seeds");
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    flash           = require("connect-flash"),
+    passport        = require("passport"),
+    localStrategy   = require("passport-local"),
+    methodOverride  = require("method-override"),
+    User            = require("./models/user"),
+    seedDB          = require("./seeds");
     
 //  dotenv setup
     require('dotenv').config();

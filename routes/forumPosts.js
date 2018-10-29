@@ -35,8 +35,9 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                 newPost.author.createdAt = moment(updatedUser.createdAt, "MMM-DD-YYYY");
                 newPost.forumTopic = foundForumTopic.name;
                 newPost.forumTopicId = foundForumTopic.id;
+                newPost.isLatest = true;
                 newPost.save();
-                foundForumTopic.posts.push(newPost);
+                foundForumTopic.posts.push(newPost); 
                 foundForumTopic.save();
                 // UPDATE POSTSCOUNT TO ALL POSTS FROM THE USER
                 ForumPost.update({'author.id' : req.user._id}, { $set: {'author.postsCount': updatedUser.postsCount + 1} }, {multi: true }, function (err, updatePostsRes) {
@@ -66,11 +67,18 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                                     return res.redirect("/forumTopics/" + req.params.id);
                                 }
                             });
+                            // UPDATE ISLATEST POST VALUE TO FALSE OF THE POST REMOVED
+                            ForumPost.findOneAndUpdate({'text' : latestPostsArray.posts[0].text}, {'isLatest' : false}, function (err, updatedPost) {
+                               if (err) {
+                                    req.flash("error", "There was an error while updating the latest posts property.");
+                                    return res.redirect("/forumTopics/" + req.params.id);
+                               } 
+                            });
                         }
                         // ADD NEW POST TO THE RECENT POSTS ARRAY
-                        latestPostsArray.posts.push(latestPost);
+                        latestPostsArray.posts.push(latestPost); 
                         latestPostsArray.save();
-                        // ADD PLUS ONE TO THE POST COUNTER OF THE USER
+
                         req.flash("success", "Added your new post successfully.");
                         res.redirect("/forumTopics/" + req.params.id);
                     });
@@ -99,39 +107,45 @@ router.delete("/:post_id", middleware.checkForumPostOwnership, function (req, re
             req.flash("error", "There was an error deleting your post.");
             return res.redirect("/forumTopics/" + req.params.id);
         }
-        // GET THE LATEST POSTS ARRAY
-        LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function(err, latestPostsArray) {
+        // REMOVE POST ID REFERENCE FROM POST TOPIC OBJECT  
+        ForumTopic.findByIdAndUpdate(postToDelete.forumTopicId, {$pull: {posts: postToDelete.id}}, {safe: true, upsert: true}, function (err) {
             if (err) {
                 req.flash("error", "There was an error with the latest posts functionality.");
-                return res.redirect("/campgrounds");
+                return res.redirect("/forumTopics");
             }
-            // CHECK IF THE POST THAT WE WANT TO DELETE IS IN THE LATEST POSTS ARRAY
-            for (var i = 0; i < latestPostsArray.posts.length; i++) {
-                if (req.body.postText === latestPostsArray.posts[i].text) {
-                    LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {_id : latestPostsArray.posts[i]._id } } }, function (err, updatedLatestPostsArray) {
-                        if (err) {
-                            req.flash("error", "There was an error while updating the latest posts array.");
-                            return res.redirect("/forumTopics/" + req.params.id);
-                        }
-                    });
-                }
-            }
-            // REDUCE THE POSTS COUNTER OF THE USER WHOSE POST GOT DELETED 
-            User.findByIdAndUpdate(postToDelete.author.id, { $set: { postsCount: req.user.postsCount - 1}}, function(err, updatedUser) {
+            // GET THE LATEST POSTS ARRAY
+            LatestPosts.findById('5ac5fbdea52ff006dcae2c78', function (err, latestPostsArray) {
                 if (err) {
-                    req.flash("error", "There was a problem while updating the user posts counter.");
-                    return res.redirect("/forumTopics/" + req.params.id);
+                    req.flash("error", "There was an error with the latest posts functionality.");
+                    return res.redirect("/forumTopics");
                 }
-                // REDUCE THE POSTS COUNTER ON ALL THE POSTS THAT BELONG TO THIS USER
-                ForumPost.update({'$and': [{'author.id' : postToDelete.author.id}, {_id: {'$ne': req.params.post_id} }]}, { $set: {'author.postsCount': updatedUser.postsCount - 1} }, {multi: true }, function (err, updatePostsRes) {
-                    if (err) {
-                        req.flash("error", "There was an error while updating the posts count value of all your posts.");
-                        console.log(err);
-                        return res.redirect("/campgrounds");
+                // CHECK AND DELETE IF THE POST THAT WE WANT TO DELETE IS IN THE LATEST POSTS ARRAY
+                for (var i = 0; i < latestPostsArray.posts.length; i++) {
+                    if (req.body.postText === latestPostsArray.posts[i].text) {
+                        LatestPosts.findOneAndUpdate('5ac5fbdea52ff006dcae2c78', {$pull: {posts : {_id : latestPostsArray.posts[i]._id } } }, function (err, updatedLatestPostsArray) {
+                            if (err) {
+                                req.flash("error", "There was an error while updating the latest posts array.");
+                                return res.redirect("/forumTopics/" + req.params.id);
+                            }
+                        });
                     }
-                // eval(require("locus"))
-                req.flash("success", "Post successfully deleted.");
-                res.redirect("/forumTopics/" + req.params.id);
+                }
+                // REDUCE THE POSTS COUNTER OF THE USER WHOSE POST GOT DELETED 
+                User.findByIdAndUpdate(postToDelete.author.id, { $set: { postsCount: req.user.postsCount - 1}}, function(err, updatedUser) {
+                    if (err) {
+                        req.flash("error", "There was a problem while updating the user posts counter.");
+                        return res.redirect("/forumTopics/" + req.params.id);
+                    }
+                    // REDUCE THE POSTS COUNTER ON ALL THE POSTS THAT BELONG TO THIS USER
+                    ForumPost.update({'$and': [{'author.id' : postToDelete.author.id}, {_id: {'$ne': req.params.post_id} }]}, { $set: {'author.postsCount': updatedUser.postsCount - 1} }, {multi: true }, function (err, updatePostsRes) {
+                        if (err) {
+                            req.flash("error", "There was an error while updating the posts count value of all your posts.");
+                            console.log(err);
+                            return res.redirect("/campgrounds");
+                        }
+                        req.flash("success", "Post successfully deleted.");
+                        res.redirect("/forumTopics/" + req.params.id);
+                    });
                 });
             });
         });

@@ -22,7 +22,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                     comment.author.username = req.user.username;
                     // save comment
                     comment.save();
-                    campground.comments.push(comment);
+                    campground.comments.push(comment); 
                     campground.save();
                     req.flash("success", "Successfully added comment");
                     res.redirect('/campgrounds/' + campground._id);
@@ -36,7 +36,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 router.put("/:comment_id", middleware.checkCommentsOwnership, function(req, res) {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if (err) {
-            res.redirect("back")
+            res.redirect("back");
         } else {
             res.redirect("/campgrounds/" + req.params.id);
         }
