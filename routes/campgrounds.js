@@ -9,11 +9,13 @@ var express         = require("express"),
     moment          = require("moment"),
     momentTimezone  = require("moment-timezone");
 
+
 // FORECAST config 
 var options = {
     APIKey: process.env.FORECAST_SECRET_KEY,
     timeout: 1000
 },
+
 darksky = new DarkSky(options);
 
 // NODE GEOCODER config
