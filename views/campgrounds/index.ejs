@@ -7,7 +7,7 @@
             <h1><i id="campfire-icon" class="wi wi-fire"></i> Welcome To W3Camp</h1>
             <p>View our hand-picked campgrounds from all over the world</p>
             <p>
-                <a class="btn btn-primary btn-lg btn-hover-shadow"href="/campgrounds/new"><i class="fas fa-plus"></i> Add New Campground</a>
+                <a class="btn btn-camp-index btn-primary btn-lg btn-hover-shadow"href="/campgrounds/new"><i class="fas fa-plus"></i> Add New Campground</a>
             </p>
             <p>
                 <form action="/campgrounds" method="GET" class="form-inline" id="campground-search">
@@ -29,7 +29,7 @@
                         <p class="card-text">Prices starting at $<%=campground.price%></p>
                     </div>
                     <p>
-                        <a class="btn card-link btn-primary hvr-grow" href="/campgrounds/<%= campground._id %>">More info</a>
+                        <a class="btn card-link btn-camp-index btn-primary hvr-grow" href="/campgrounds/<%= campground._id %>">More info</a>
                     </p>
                 </div>
             </div>
