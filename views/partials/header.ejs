@@ -7,18 +7,16 @@
         <title>W3Camp</title>
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="/stylesheets/main.css">
         <link rel="stylesheet" href="/stylesheets/weather-icons-wind.min.css">
         <link rel="stylesheet" href="/stylesheets/weather-icons.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito|Noto+Sans|Roboto|Josefin+Sans|Raleway|Quicksand|Maven+Pro:500" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Vollkorn|Nunito|Noto+Sans|Roboto|Josefin+Sans|Raleway|Quicksand|Maven+Pro:500&display=swap" rel="stylesheet"> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
-        <!--<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>-->
     </head>
     <body class="<%= typeof page !== 'undefined' && page === 'login' ? 'login-bkg' : typeof page !== 'undefined' && page === 'showCampground' ? 'showCampgroundPageClass' : typeof page !== 'undefined' && page === 'userPage' ? 'userPageClass' : typeof page !== 'undefined' && page === 'register' ? 'register-bkg' : typeof page !== 'undefined' && page === 'contact' ? 'contact-bkg' : typeof page !== 'undefined' && page === 'newCampground' ? 'newCampground-bkg' : typeof page !== 'undefined' && page === 'editCampground' ? 'editCampground-bkg' : typeof page !== 'undefined' && page === 'newForumTopic' ? 'newForumTopic-bkg' : typeof page !== 'undefined' && page === 'editForumTopic' ? 'editForumTopic-bkg' : ' ' %>">
         <!-- userPage -->
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark"> <!-- fixed-top for fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="/">W3Camp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,30 +42,31 @@
                             <li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
                                 <a class="nav-link" href="/register"><!--<i class="fas fa-user-plus"></i> --> Sign Up</a>
                             </li>
-                        <% } else if (currentUser.isAdmin){ %>
-                            <li class="nav-item <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <% } else if (currentUser.isAdmin) { %>
+                            <li class="nav-item dropdown <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
+                                <a class="nav-link dropdown-toggle" href="/users/<%= currentUser._id %>" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                                     <div class="inset">
                                         <img src="<%= currentUser.avatarImg.url %>" class="img-circle">
                                     </div>
                                     Admin: <%= currentUser.username %>
                                 </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a>
-                                        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                    </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a></li>
+                                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                </ul>
+                            </li>
                         <% } else {%>
-                            <li class="nav-item<%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li class="nav-item dropdown <%= typeof page !== 'undefined' && page === 'userPage' ? 'active' : '' %>">
+                                <a class="nav-link dropdown-toggle" href="/users/<%= currentUser._id %>" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="inset">
                                         <img src="<%= currentUser.avatarImg.url %>" class="img-circle">
                                     </div>
                                     <%= currentUser.username %>
                                 </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a>
-                                        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                    </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> View Profile</a></li>
+                                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                </ul>
                             </li>
                         <% } %>
                     </ul>

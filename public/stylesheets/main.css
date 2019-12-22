@@ -118,16 +118,23 @@ body {
 
 
     /*________HEADER STYLES________*/
+.navbar {
+    background-color: #252525;
+    height: 90px;
+}
+    
 .navbar .navbar-brand{
-    font-family: 'Noto Sans', sans-serif;
+    /*font-family: 'Noto Sans', sans-serif;*/
+    font-family: 'Vollkorn', serif;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 27px;
+    margin-bottom: 1px;
 }
 .navbar .navbar-brand:hover{
     color: #C2CBC9;
 }
 .navbar-dark .navbar-nav .nav-link{
-    font-size: 16px;
+    font-size: 17px;
     font-family: 'Noto Sans', sans-serif;
 }
 /*User profile image and name*/
@@ -156,13 +163,76 @@ body {
     -webkit-box-shadow: 0 0 2px white;
     box-shadow: 0 0 2px white;
 }
-.dropdown-menu {
-    left: auto;
-    background-color: #343A40;
-}
+/*new dropdown*/
 .dropdown-item {
     color: #ffffff;
 }
+.dropdown-menu{
+    visibility: hidden;
+    display: none;
+}
+.navbar-nav li:hover>ul.dropdown-menu {
+    display: block;
+    visibility: visible;
+    width: 200px;
+    margin-top: 1px;
+    margin-left: 5px;
+    background-color: #252525;
+}
+#navbarCollapse {
+    position:relative;
+    z-index:2;
+    width: 100%;
+    background-color: #252525;
+    padding: 20px;
+}
+nav.navbar.shrink {
+    width: 100%;
+    height: 55px;
+    position: fixed;
+    left: 0px;
+    -webkit-transition: all 1.4s ease;
+    -moz-transition: all 1.4s ease;
+    -o-transition:  all 1.4s ease;
+    transition: all 1.4s ease;
+}
+nav.navbar.shrink #navbarCollapse {
+    width: 100%;
+    height: 55px;
+    -webkit-transition: all 1.4s ease;
+    -moz-transition: all 1.4s ease;
+    -o-transition:  all 1.4s ease;
+    transition: all 1.4s ease;
+}
+nav.navbar.shrink .navbar-brand {
+    font-size: 23px;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    -webkit-transition: font-size 1.4s;
+    -moz-transition:  font-size 1.4s;
+    -o-transition:  font-size 1.4s;
+    transition:  font-size 1.4s;
+}
+nav.navbar.shrink #navbarCollapse ul li a{
+    font-size: 15px;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    -webkit-transition: font-size 1.4s;
+    -moz-transition:  font-size 1.4s;
+    -o-transition:  font-size 1.4s;
+    transition:  font-size 1.4s;
+}
+nav.navbar.shrink .inset {
+    margin-top: -2;
+    width: 30px;
+    height: 30px;
+    -webkit-transition: all 1.4s ease;
+    -moz-transition: all 1.4s ease;
+    -o-transition:  all 1.4s ease;
+    transition: all 1.4s ease;
+}
+
+
 /*__________ALERT MESSAGES STYLES________*/
 .alert {
     margin-top: 20px;
@@ -792,6 +862,10 @@ ul.social-footer2 li a {
 .coverimg-wrap:hover .coverimg-buton {
   opacity: 1;
 }
+.modal-backdrop {
+     background-color: rgba(0,0,0,.0001) !important;
+     opacity:0.5 !important;
+}
 .modal-form-coverimg {
     display: none; 
     position: fixed; 
@@ -806,7 +880,7 @@ ul.social-footer2 li a {
 }
 .modalform-content {
     color: #ffffff;
-    background-color: #343A40;
+    /*background-color: #343A40;*/
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #74787C;

@@ -1,9 +1,12 @@
 /* global $ */
 window.onload = function() { 
     
+    addNavbarShrinkClass();
+    
     if($('body').hasClass('userPageClass')) {
         userCoverImgForm();
     } 
+    
     if($('body').hasClass('showCampgroundPageClass')) {
         campgroundMoreInfoMenu();
     } 
@@ -39,3 +42,14 @@ var campgroundMoreInfoMenu = function () {
        $('#campgroundMoreInfo-bookBtn')[0].click();
     });
 };
+// Navbar shrink class toggle
+var addNavbarShrinkClass = function() {
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 40 && $(window).width() > 766) {
+            $('nav').addClass('shrink');
+        }
+        else {
+            $('nav').removeClass('shrink');
+        }
+    });
+}
