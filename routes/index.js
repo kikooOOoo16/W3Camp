@@ -173,22 +173,17 @@ router.get("/users/:id/edit", middleware.checkProfileOwnership, function(req, re
 
 // UPDATE USER PROFILE ROUTE 
 router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"), function (req, res) {
-    if (req.body.adminPass === process.env.ADMIN_PASS){
-    req.body.user.isAdmin = true;
-    }
     if (req.file) {
         // check if updating cover image
-        if (req.body.coverImageBool === "true") {
+        if (req.body.coverImageBool !== undefined && req.body.coverImageBool === "true") {
             if (req.body.oldCoverImagePublicId) { 
                 // delete old cover image
                 cloudinary.uploader.destroy(req.body.oldCoverImagePublicId, function(error, result) {
                     if (error && !error.result === "ok") {
-                        console.log("Cloudinart cover image delete error : " + error);
+                        console.log("Cloudinary cover image delete error : " + error);
                         req.flash("error", "There was a problem deleting your old cover image.");
                         res.redirect("/users/" + req.params.id);
-                        // eval(require("locus"))
                     }
-                    // console.log(result); 
                 });
             } 
             // upload new cover image
@@ -200,31 +195,28 @@ router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"
                 User.findByIdAndUpdate(req.params.id, {$set: {coverImg : newCoverImg}}, function (err, user){
                    if (err || !user) {
                         req.flash("error", err.message);
-                        res.redirect("back");
+                        return res.redirect("back");
                    } else {
-                        req.flash("success", "Profile info successfully updated!");
-                        res.redirect("/users/" + req.params.id);   
+                        req.flash("success", "Cover image updated.");
+                        return res.redirect("/users/" + req.params.id);   
                    }
                 });
             });
-        } else {
+        } else if(req.body.userImageBool !== undefined) {
             // update avatar image
             // delete old avatar image
             cloudinary.uploader.destroy(req.body.oldAvatarImagePublicId, function(result) {
                 if (result.result !== 'ok' && result.result !== undefined) {
                     req.flash("error", "There was an error while deleting your old avatar image.");
-                    console.log("Deleting user avatar image problem : " + result.result);
                     return res.redirect("/users/" + req.params.id);
                 }
-                // console.log(result); 
-            
             // upload new avatar image
                 cloudinary.uploader.upload(req.file.path, function(result){
-                    req.body.user.avatarImg = {
+                    var newAvatarImg = {
                         publicId: result.public_id,
                         url: result.secure_url
                     }
-                    User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
+                    User.findByIdAndUpdate(req.params.id, {$set: {avatarImg : newAvatarImg}}, function (err, user){
                         if (err || !user) {
                             req.flash("error", "There was an error while updating your new avatar image in the DB.");
                             return res.redirect("/users/" + req.params.id);
@@ -234,22 +226,25 @@ router.put("/users/:id", middleware.checkProfileOwnership, upload.single("image"
                                 req.flash("error", "There was an error while applying your new avatar image to your forum posts.");
                                 return res.redirect("/users/" + req.params.id);
                             }
-                            req.flash("success", "Profile info successfully updated!");
-                            res.redirect("/users/" + req.params.id);   
+                            req.flash("success", "Profile picture successfully updated!");
+                            return res.redirect("/users/" + req.params.id);  
                         });
                     });
                 });
             });
         }
     } else {
+        if (req.body.adminPass === process.env.ADMIN_PASS){
+        req.body.user.isAdmin = true;
+        }
         User.findByIdAndUpdate(req.params.id, {$set: req.body.user}, function (err, user){
            if (err || !user) {
-                req.flash("error", err.message);
-                res.redirect("back");
+                req.flash("error", "Please select a new image.");
+                return res.redirect("back");
            } else {
                 req.flash("success", "Profile info successfully updated!");
                 req.flash("warning", "If you change your username you are automatically logged out!");
-                res.redirect("/users/" + user.id);   
+                return res.redirect("/users/" + user.id);   
            }
         });
     }

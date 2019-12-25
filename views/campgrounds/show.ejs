@@ -65,7 +65,7 @@
                                     <% } else { %>
                                         <i class="fas fa-user" aria-hidden="true"></i></span>
                                     <% } %>
-                                    <%= comment.author.username %>
+                                    <a class="comment-author-link" href="/users/<%= comment.author.id %>"> <%= comment.author.username %> </a>
                                 </strong>
                                 <span class="float-right"><i class="far fa-clock"></i> <%= moment(comment.createdAt).fromNow() %></span>
                                 <p><%= comment.text %></p>
