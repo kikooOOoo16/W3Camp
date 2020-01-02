@@ -278,15 +278,15 @@ router.post("/forgot", function (req, res, next) {
         },
         function (token, foundUser, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: "Gmail",
+                service: "gmail",
                 auth: {
                     user: process.env.GMAIL_ACCOUNT,
                     pass: process.env.GMAIL_PASSWORD
                 }
             });
             var mailOptions = {
-                to: foundUser.email,
                 from: "w3CampApp@gmail.com",
+                to: foundUser.email,
                 subject: "Node.js Password Reset",
                 text: "You are receiving this because you (or someone else) have requested the reset of the password for your account. \n \n " +
                 "Please click on the following link, or paste it into your browser to complete the proccess: \n \n" + 
@@ -358,7 +358,7 @@ router.post("/reset/:token", function(req, res) {
     },
     function(foundUser, done) {
         var smtpTransport = nodemailer.createTransport({
-            service: "Gmail",
+            service: "gmail",
             auth: {
                 user: process.env.GMAIL_ACCOUNT,
                 pass: process.env.GMAIL_PASSWORD
@@ -376,7 +376,6 @@ router.post("/reset/:token", function(req, res) {
                 req.flash("error", "There was a problem sending your request.");
                 return res.redirect("/forgot");
             } 
-            // eval(require("locus"))
             console.log("The user "+ foundUser.username + " just reset his password.");
             req.flash("success", "Success! Your password has been changed.");
             done (err, done);

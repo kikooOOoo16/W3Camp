@@ -29,7 +29,7 @@ $('#campground-search').on('input', function(){
                                 <p class="card-text">Prices starting at ${campground.price}</p>
                             </div>
                             <p>
-                                <a class="btn card-link btn-primary hvr-grow" href="/campgrounds/${campground._id}">More Info </a>
+                                <a class="btn card-link btn-camp-index btn-primary hvr-grow" href="/campgrounds/${campground._id}">More Info </a>
                             </p>
                         </div>
                     </div>
