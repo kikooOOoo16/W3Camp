@@ -8,7 +8,6 @@ var express         = require("express"),
     methodOverride  = require("method-override"),
     User            = require("./models/user"),
     seedDB          = require("./seeds");
-    locus           = require("locus");
     
 //  dotenv setup
     require('dotenv').config();
