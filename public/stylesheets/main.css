@@ -7,12 +7,15 @@
     outline: none;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
+html, body {
+    height: 100%;
     background-color: #EBEBEB;
+}
+
+@media (max-width:766px) {
+    html, body {
+        height: 120%;
+    }
 }
 
 
@@ -280,9 +283,16 @@ nav.navbar.shrink .inset {
     /*__________FOOTER STYLES________*/
 
 /* Main Footer */
+#footer {
+    bottom: 0;
+    min-height: 90px;
+    max-height: 100px;
+    width: 100%;
+    clear: both;
+}
+
 footer .main-footer {
     padding: 20px 0;
-    margin-top: 20px;
     background: #252525;
 }
 
@@ -291,7 +301,7 @@ footer ul {
     list-style: none;
 }
 
-/* Copy Right Footer */
+/* Copyright Footer */
 
 .footer-copyright {
     background: #222;
@@ -315,8 +325,6 @@ footer ul {
     margin-bottom: 30px;
     border-bottom: 3px solid #222;
 }
-
-/* Footer 4 */
 
 .footer- .logo {
     display: inline-block;

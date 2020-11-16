@@ -1,4 +1,18 @@
-            <footer id="footer" class="footer-1">
+
+            <style>
+                #footer {
+                <%= typeof page !== 'undefined' && (page === 'login' || page === 'register' || page === 'contact') ? 'position: absolute' : ''%>
+                }
+                <% if(typeof page !== 'undefined' && page === 'register') { %>
+                @media (max-width:768px) {
+                    #footer {
+                        position: inherit;
+                    }
+                }
+                <% } %>
+            </style>
+
+            <footer id="footer" class="page-footer">
                 <div class="main-footer widgets-dark typo-light">
                     <div class="container">
                         <div class="row">

@@ -8,6 +8,7 @@ var express         = require("express"),
     methodOverride  = require("method-override"),
     User            = require("./models/user"),
     seedDB          = require("./seeds");
+    locus           = require("locus");
     
 //  dotenv setup
     require('dotenv').config();
@@ -63,7 +64,8 @@ app.use("/contact", contactRoutes);
 app.use("/forumTopics", forumTopicsRoutes);
 app.use("/forumTopics/:id/forumPosts", forumPostsRoutes);
 
+const PORT = process.env.PORT || 8080;
 
-app.listen(process.env.PORT, process.env.ID, function() {
-    console.log("The W3Camp server has started.");
+app.listen(PORT, process.env.ID, function() {
+    console.log("The W3Camp server has started on port " + PORT);
 });
