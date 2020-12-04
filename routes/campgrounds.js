@@ -11,22 +11,22 @@ var express         = require("express"),
 
 
 // FORECAST config 
-var options = {
+var forecastOptions = {
     APIKey: process.env.FORECAST_SECRET_KEY,
     timeout: 1000
-},
-
-darksky = new DarkSky(options);
-
-// NODE GEOCODER config
-var options = {
-  provider: 'google',
-  httpAdapter: 'https',
-  apiKey: process.env.GOOGLE_GEOCODER_API,
-  formatter: null
 };
 
-var geocoder = NodeGeocoder(options);
+darksky = new DarkSky(forecastOptions);
+
+// NODE GEOCODE config
+var geocodeOptions = {
+    provider: 'google',
+    httpAdapter: 'https',
+    apiKey: process.env.GOOGLE_GEOCODER_API,
+    formatter: null
+};
+
+var geocode = NodeGeocoder(geocodeOptions);
     
 // MULTER config
 var storage = multer.diskStorage({
@@ -75,36 +75,36 @@ router.get("/", function(req, res) {
             }   
             res.status(200).json(resultData);    
         });
-        } else {
-            // Get all campgrounds
-            Campground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allCampgrounds) {
-                Campground.count().exec(function (err, count) {
-                    if (err) {
-                        req.flash("error", err.message);
-                        console.log(err);
-                    } else {
-                        res.render("campgrounds/index", {
-                            campgrounds: allCampgrounds,
-                            current: pageNumber,
-                            pages: Math.ceil(count / perPage),
-                            page: "campgrounds",
-                            search: false
-                        });
-                    }
-                });
+    } else {
+        // Get all campgrounds
+        Campground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allCampgrounds) {
+            Campground.countDocuments().exec(function (err, count) {
+                if (err) {
+                    req.flash("error", err.message);
+                    console.log(err);
+                } else {
+                    res.render("campgrounds/index", {
+                        campgrounds: allCampgrounds,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        page: "campgrounds",
+                        search: false
+                    });
+                }
             });
-        }
-    });
+        });
+    }
+});
 
 // NEW - show form to create new campground
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-   res.render("campgrounds/new", {page: "newCampground"}); 
+    res.render("campgrounds/new", {page: "newCampground"});
 });
 
 // CREATE - add new campground to database
 router.post("/", middleware.isLoggedIn, upload.single("image"), function(req, res) {
     // get data from form and add to campground array
-    geocoder.geocode(req.body.location, function(err, data) {
+    geocode.geocode(req.body.location, function(err, data) {
         if (err || !data.length) {
             console.log("GEOCODER ERR: " + err);
             req.flash("error", "Invalid campground location.");
@@ -131,7 +131,7 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(req, re
                     req.flash("error", err.message);
                     return res.redirect("back");
                 } else {
-                    // redirect back to campgruonds page
+                    // redirect back to campgrounds page
                     res.redirect("/campgrounds/" + newCampground.id);
                 }
             });
@@ -163,7 +163,7 @@ router.get("/:id", function(req, res) {
                 // generate week days for weather widget
                 var dailyWeather = weatherWeekDaysGenerator(data, dateString);
                 // eval(require("locus"))
-            res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather, page : showPage});
+                res.render("campgrounds/show", {campground: foundCampground, googleMapsApi: process.env.GOOGLE_MAPS_API, weather: data, weatherTime: tzFormatted, currentlyIcon: currentlyIcon, weatherBackground: weatherBackground, dailyWeather: dailyWeather, page : showPage});
             });
         }
     });
@@ -171,15 +171,15 @@ router.get("/:id", function(req, res) {
 
 // EDIT CAMPGROUND
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
-   Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id, function(err, foundCampground){
         res.render("campgrounds/edit", {campground: foundCampground, page: "editCampground"});
-   });
+    });
 });
 
 // UPDATE CAMPGROUND
 router.put("/:id", middleware.checkCampgroundOwnership, upload.single("image"), function(req, res) {
     // find and update the correct campground
-    geocoder.geocode(req.body.location, function (err, data) {
+    geocode.geocode(req.body.location, function (err, data) {
         if (err || !data.length) {
             req.flash("error", err.message);
             console.log(err);
@@ -208,7 +208,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, upload.single("image"), 
                     id: req.user._id,
                     username: req.user.username
                 }
-            // save new edited campground
+                // save new edited campground
                 Campground.findByIdAndUpdate(req.params.id, {$set: req.body.campground}, function (err, updatedCampground){
                     if (err) {
                         req.flash("error", err.message);
@@ -224,7 +224,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, upload.single("image"), 
             req.body.campground.lat = data[0].latitude;
             req.body.campground.lng = data[0].longitude;
             req.body.campground.location = data[0].formattedAddress;
-        
+
             req.body.campground.author = {
                 id: req.user._id,
                 username: req.user.username
@@ -250,7 +250,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
             req.flash("error", "Request partially executed.");
         } else {
             // delete image on cloudinare cloud server
-           cloudinary.uploader.destroy(foundCampground.image.publicId, function(error, result) {
+            cloudinary.uploader.destroy(foundCampground.image.publicId, function(error, result) {
                 if (error) {
                     console.log("Cloudinary image destory err : " + error);
                 }

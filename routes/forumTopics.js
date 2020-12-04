@@ -36,8 +36,8 @@ router.get("/new", middleware.isLoggedIn, function (req,res) {
 router.post("/", middleware.isLoggedIn, function (req,res) {
     // add topic author info
     req.body.forumTopic.author = {
-            id: req.user._id,
-            username: req.user.username
+        id: req.user._id,
+        username: req.user.username
     }
     ForumTopic.create(req.body.forumTopic, function (err, newForumTopic) {
         if (err) {
@@ -79,13 +79,13 @@ router.get("/:id/edit", middleware.checkForumTopicOwnership, function(req, res) 
 // UPDATE - handle update request from the edit form for the forum topic
 router.put("/:id", function (req, res) {
     ForumTopic.findByIdAndUpdate(req.params.id, {$set: req.body.forumTopic}, function (err, updatedForumTopic) {
-       if (err) {
-           req.flash("error", "There was an error handling your update requst.");
-           return res.redirect("/forumTopics/" + req.params.id);
-       } 
+        if (err) {
+            req.flash("error", "There was an error handling your update requst.");
+            return res.redirect("/forumTopics/" + req.params.id);
+        }
         // If successfull   
-       req.flash("success", "Forum topic successfully updated.");
-       res.redirect("/forumTopics/" + req.params.id);
+        req.flash("success", "Forum topic successfully updated.");
+        res.redirect("/forumTopics/" + req.params.id);
     });
 });
 module.exports = router;
@@ -94,8 +94,8 @@ module.exports = router;
 router.delete("/:id", middleware.checkForumTopicOwnership, function(req, res){
     ForumTopic.findByIdAndRemove(req.params.id, function(err, forumTopicToDelete){
         if (err) {
-           req.flash("error", "There was an error deleting your discussion topic.");
-           return res.redirect("/forumTopics/" + req.params.id);
+            req.flash("error", "There was an error deleting your discussion topic.");
+            return res.redirect("/forumTopics/" + req.params.id);
         } 
         // REMOVE POSTS RELATED TO THIS TOPIC WHICH ARE WITH A TRUE VALUE FOR LatestPost AND UPDATE THE LATEST POSTS ARRAY
         forumTopicToDelete.posts.forEach(function (postId) {

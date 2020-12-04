@@ -6,8 +6,7 @@ var express         = require("express"),
     passport        = require("passport"),
     localStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
-    User            = require("./models/user"),
-    seedDB          = require("./seeds");
+    User            = require("./models/user");
     
 //  dotenv setup
     require('dotenv').config();
@@ -22,14 +21,12 @@ var commentRoutes     = require("./routes/comments"),
 
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.DATABASE_URL, {useMongoClient: true});
-mongoose.connect(process.env.MLAB_DATABASE_URL, {useMongoClient: true});
+mongoose.connect(process.env.MLAB_DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-// seed the database 
-// seedDB();
 
 // MOMENTJS CONFIGURATION
 app.locals.moment = require("moment");
@@ -48,11 +45,11 @@ passport.deserializeUser(User.deserializeUser());
 
 // Middleware that passes data to all templates
 app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   res.locals.error = req.flash("error");
-   res.locals.success = req.flash("success");
-   res.locals.warning = req.flash("warning");
-   next();
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    res.locals.warning = req.flash("warning");
+    next();
 });
 
 // use route files

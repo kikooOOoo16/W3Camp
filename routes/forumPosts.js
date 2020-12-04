@@ -69,10 +69,10 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                             });
                             // UPDATE ISLATEST POST VALUE TO FALSE OF THE POST REMOVED
                             ForumPost.findOneAndUpdate({'text' : latestPostsArray.posts[0].text}, {'isLatest' : false}, function (err, updatedPost) {
-                               if (err) {
+                                if (err) {
                                     req.flash("error", "There was an error while updating the latest posts property.");
                                     return res.redirect("/forumTopics/" + req.params.id);
-                               } 
+                                }
                             });
                         }
                         // ADD NEW POST TO THE RECENT POSTS ARRAY
