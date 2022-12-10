@@ -16,7 +16,7 @@
     "connect-flash": "^0.1.1",
     "dotenv": "^5.0.0",
     "ejs": "^2.7.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.1",
     "forecast.io": "0.0.11",
     "method-override": "^2.3.10",
